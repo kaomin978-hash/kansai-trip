@@ -682,21 +682,21 @@ svg.leaflet-image-layer.leaflet-interactive path {
    CSS-only tab panels, fixed bottom tab bar. Dark mode mirrors every token. */
 :root{
   color-scheme: light;
-  --bg:#FDF4E3;
-  --panel:#FFFFFF;
-  --panel-2:#FFF7E7;
-  --rule:#E6D6B8;
-  --fg:#4B3C2B;
-  --muted:#A08B6F;
-  --cyan:#DE7F6E;        /* accent */
+  --bg:#EFDFC2;          /* kraft-paper beige, clearly not white */
+  --panel:#FFFBF1;
+  --panel-2:#F7EBD4;
+  --rule:#D2B98C;
+  --fg:#36291A;          /* near-black brown */
+  --muted:#6F5C42;       /* dark enough to read on paper */
+  --cyan:#B9513C;        /* accent */
   --onaccent:#FFFFFF;    /* text on accent fills */
-  --mint:#FFDFA3;        /* section chip */
-  --route:#EC9C97;
-  --blue:#5F94B8;
-  --warn:#DE9633;
-  --bad:#CF6A58;
-  --good:#6DAE80;
-  --ink:#4B3C2B;
+  --mint:#F7C56B;        /* section chip */
+  --route:#C4584F;
+  --blue:#2F6A8C;
+  --warn:#9E6412;
+  --bad:#A33A2B;
+  --good:#3F7D55;
+  --ink:#36291A;
   --edge:2px;
   --round:16px;
   --shadow:0 3px 0 var(--rule);
@@ -900,8 +900,18 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
 /* ---- per-day map ---- */
 .mapwrap{margin:14px 16px 0;border:1px solid var(--rule);border-radius:11px;overflow:hidden;background:var(--panel-2)}
-.daymap{height:300px;width:100%;background:var(--panel-2)}
-.daymap.hidden{display:none}
+.mapstack{position:relative}
+.schema{display:block;width:100%;height:auto}
+.schema .spin{cursor:pointer}
+.schema .spin circle{transition:r .12s}
+.schema .spin.sel circle{fill:var(--cyan);r:16}
+.schema .spin:focus-visible circle{stroke:var(--cyan);stroke-width:4}
+.daymap{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .25s;background:var(--panel-2)}
+.mapstack.ready .daymap{opacity:1;pointer-events:auto}
+.mapstack.ready .schema{visibility:hidden}
+.step .name .no{display:inline-flex;align-items:center;justify-content:center;font-style:normal;
+  width:19px;height:19px;border-radius:50%;background:var(--route);color:#fff;
+  font-size:11.5px;font-weight:700;margin-right:7px;vertical-align:1px}
 .mapnote{padding:14px 16px;color:var(--muted);font-size:13px;margin:0}
 .maprow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 12px;border-top:1px solid var(--rule)}
 .maprow a{display:inline-flex;align-items:center;gap:6px;background:var(--cyan);color:var(--ink);
@@ -1308,10 +1318,10 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
   /* ---------- rendering ---------- */
 
-  function stopHtml(it, di, ii) {
+  function stopHtml(it, di, ii, num) {
     var h = '<div class="step' + (it.hi ? ' hi' : '') + '" data-d="' + di + '" data-i="' + ii + '">';
     h += '<div class="t">' + esc(it.time) + '</div><div class="c">';
-    h += '<div class="name">' + (it.name || '') +
+    h += '<div class="name">' + (num ? '<i class="no">' + num + '</i>' : '') + (it.name || '') +
          (it.pin ? ' <span class="pin">' + esc(it.pin) + '</span>' : '') + '</div>';
     if (it.det) h += '<div class="det">' + it.det + '</div>';
     if (it.q || it.url) {
@@ -1394,11 +1404,70 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
       '&travelmode=transit';
   }
 
+  /* A map drawn from the coordinates themselves. No tiles, so it works from a
+     file, inside an artifact, and in print -- the street map on top of it is
+     an upgrade that only appears once a tile actually loads. */
+  function schemaSvg(pts) {
+    var W = 640, H = 300, PAD = 34;
+    var k = Math.cos(pts[0].it.lat * Math.PI / 180);
+    var xs = pts.map(function (p) { return p.it.lng * k; });
+    var ys = pts.map(function (p) { return -p.it.lat; });
+    var x0 = Math.min.apply(null, xs), x1 = Math.max.apply(null, xs);
+    var y0 = Math.min.apply(null, ys), y1 = Math.max.apply(null, ys);
+    var sx = (x1 - x0) || 1e-4, sy = (y1 - y0) || 1e-4;
+    var sc = Math.min((W - 2 * PAD) / sx, (H - 2 * PAD) / sy);
+    var ox = (W - sx * sc) / 2 - x0 * sc, oy = (H - sy * sc) / 2 - y0 * sc;
+    var P = pts.map(function (p, i) {
+      return { x: xs[i] * sc + ox, y: ys[i] * sc + oy, p: p };
+    });
+    /* stops a few hundred metres apart land on the same spot at this scale,
+       so nudge overlapping pins until each one is readable */
+    var MIN = 32;
+    for (var pass = 0; pass < 80; pass++) {
+      var moved = false;
+      for (var a = 0; a < P.length; a++) {
+        for (var b = a + 1; b < P.length; b++) {
+          var dx = P[b].x - P[a].x, dy = P[b].y - P[a].y;
+          var dist = Math.sqrt(dx * dx + dy * dy) || 0.01;
+          if (dist >= MIN) continue;
+          var push = (MIN - dist) / 2;
+          var ux = dx / dist, uy = dy / dist;
+          P[a].x -= ux * push; P[a].y -= uy * push;
+          P[b].x += ux * push; P[b].y += uy * push;
+          moved = true;
+        }
+      }
+      if (!moved) break;
+    }
+    P.forEach(function (q) {
+      q.x = Math.min(W - 18, Math.max(18, q.x));
+      q.y = Math.min(H - 18, Math.max(18, q.y));
+    });
+    var g = '<svg class="schema" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="當天各站的相對位置">';
+    g += '<rect x="0" y="0" width="' + W + '" height="' + H + '" fill="var(--panel-2)"/>';
+    for (var gx = 0; gx <= W; gx += 64) {
+      g += '<line x1="' + gx + '" y1="0" x2="' + gx + '" y2="' + H + '" stroke="var(--rule)" stroke-width="1" opacity=".45"/>';
+    }
+    for (var gy = 0; gy <= H; gy += 64) {
+      g += '<line x1="0" y1="' + gy + '" x2="' + W + '" y2="' + gy + '" stroke="var(--rule)" stroke-width="1" opacity=".45"/>';
+    }
+    g += '<polyline points="' + P.map(function (q) { return q.x.toFixed(1) + ',' + q.y.toFixed(1); }).join(' ') +
+         '" fill="none" stroke="var(--route)" stroke-width="2.5" stroke-dasharray="7 6" stroke-linejoin="round"/>';
+    P.forEach(function (q) {
+      g += '<g class="spin" data-sel="' + q.p.i + '" tabindex="0" role="button">' +
+        '<circle cx="' + q.x.toFixed(1) + '" cy="' + q.y.toFixed(1) + '" r="13" fill="var(--route)" stroke="var(--panel)" stroke-width="2.5"/>' +
+        '<text x="' + q.x.toFixed(1) + '" y="' + (q.y + 4.5).toFixed(1) + '" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">' + q.p.n + '</text></g>';
+    });
+    g += '</svg>';
+    return g;
+  }
+
   function mapHtml(d, di) {
     var pts = pinned(d);
     if (!pts.length) return '';
-    var h = '<div class="mapwrap"><div class="daymap" id="map-' + esc(d.id) + '"></div>';
-    h += '<p class="mapnote" id="note-' + esc(d.id) + '" hidden>這裡本來是互動地圖，載不出來時可以用下面的按鈕在 Google 地圖打開。</p>';
+    var h = '<div class="mapwrap"><div class="mapstack" data-day="' + esc(d.id) + '">';
+    h += schemaSvg(pts);
+    h += '<div class="daymap" id="map-' + esc(d.id) + '"></div></div>';
     h += '<div class="maprow">';
     var u = routeUrl(pts);
     if (u) h += '<a href="' + esc(u) + '" target="_blank" rel="noopener">用 Google 地圖跑這天路線</a>';
@@ -1410,36 +1479,37 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
   function killMaps() {
     Object.keys(maps).forEach(function (k) {
+      try { if (maps[k].ro) maps[k].ro.disconnect(); } catch (e) {}
       try { maps[k].map.remove(); } catch (e) {}
       delete maps[k];
     });
   }
 
   function buildMaps() {
-    if (typeof L === 'undefined') {
-      document.querySelectorAll('.daymap').forEach(function (el) { el.classList.add('hidden'); });
-      document.querySelectorAll('.mapnote').forEach(function (el) { el.hidden = false; });
-      return;
-    }
+    if (typeof L === 'undefined') return;        // the drawn map stays as it is
     state.days.forEach(function (d, di) {
       var host = document.getElementById('map-' + d.id);
       if (!host || maps[d.id]) return;
       var pts = pinned(d);
       if (!pts.length) return;
+      var stack = host.parentNode;
 
       var map = L.map(host, { scrollWheelZoom: false, attributionControl: true });
       var layer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; OpenStreetMap'
       });
-      var failed = false;
+      var settled = false;
+      layer.on('tileload', function () {
+        if (settled) return;
+        settled = true;
+        stack.classList.add('ready');            // street map is really there
+        setTimeout(function () { resizeMaps(); }, 40);
+      });
       layer.on('tileerror', function () {
-        if (failed) return;
-        failed = true;
-        host.classList.add('hidden');
-        var note = document.getElementById('note-' + d.id);
-        if (note) note.hidden = false;
-        try { map.remove(); } catch (e) {}
+        if (settled) return;
+        settled = true;
+        try { map.remove(); } catch (e) {}       // keep the drawn map instead
         delete maps[d.id];
       });
       layer.addTo(map);
@@ -1462,15 +1532,36 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
         markers[p.i] = m;
       });
 
-      map.fitBounds(L.latLngBounds(latlngs).pad(0.18));
-      maps[d.id] = { map: map, markers: markers, bounds: L.latLngBounds(latlngs) };
+      var bounds = L.latLngBounds(latlngs);
+      map.fitBounds(bounds.pad(0.18));
+      maps[d.id] = { map: map, markers: markers, bounds: bounds };
+
+      /* The map is built while its tab is still hidden, so it measures 0x0 and
+         opens at world zoom. Re-fit it the moment the box actually gets a size. */
+      if (window.ResizeObserver) {
+        var ro = new ResizeObserver(function () {
+          if (!host.clientWidth) return;
+          try { map.invalidateSize(); map.fitBounds(bounds.pad(0.18)); } catch (e) {}
+        });
+        ro.observe(host);
+        maps[d.id].ro = ro;
+      }
     });
   }
 
-  function resizeMaps() {
+  /* A Leaflet map built inside a hidden tab measures 0x0 and opens at world
+     zoom, so keep retrying until the container actually has a width. */
+  function resizeMaps(tries) {
+    tries = tries || 0;
+    var pending = false;
     Object.keys(maps).forEach(function (k) {
-      try { maps[k].map.invalidateSize(); maps[k].map.fitBounds(maps[k].bounds.pad(0.18)); } catch (e) {}
+      var m = maps[k];
+      var el;
+      try { el = m.map.getContainer(); } catch (e) { return; }
+      if (!el || !el.clientWidth) { pending = true; return; }
+      try { m.map.invalidateSize(); m.map.fitBounds(m.bounds.pad(0.18)); } catch (e) {}
     });
+    if (pending && tries < 25) setTimeout(function () { resizeMaps(tries + 1); }, 150);
   }
 
   var selected = null;
@@ -1478,7 +1569,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     var d = state.days[di];
     if (!d) return;
     document.querySelectorAll('.step.sel').forEach(function (e) { e.classList.remove('sel'); });
-    document.querySelectorAll('.mpin.sel').forEach(function (e) { e.classList.remove('sel'); });
+    document.querySelectorAll('.mpin.sel, .spin.sel').forEach(function (e) { e.classList.remove('sel'); });
+    var sp = document.querySelector('.mapstack[data-day="' + d.id + '"] .spin[data-sel="' + ii + '"]');
+    if (sp) sp.classList.add('sel');
     var row = document.querySelector('.step[data-d="' + di + '"][data-i="' + ii + '"]');
     if (row) row.classList.add('sel');
     var pinEl = document.querySelector('[data-pin="' + d.id + '-' + ii + '"]');
@@ -1505,10 +1598,12 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
       if (d.tot) out += '<span class="tot">' + esc(d.tot) + '</span>';
       out += '</header>';
       out += mapHtml(d, di);
+      var pn = {};
+      pinned(d).forEach(function (p) { pn[p.i] = p.n; });
       out += '<div class="rail">';
       d.items.forEach(function (it, ii) {
         if (openEdit && openEdit.d === di && openEdit.i === ii) out += formHtml(it, di, ii);
-        else out += it.k === 's' ? stopHtml(it, di, ii) : moveHtml(it, di, ii);
+        else out += it.k === 's' ? stopHtml(it, di, ii, pn[ii]) : moveHtml(it, di, ii);
       });
       if (editing) {
         out += '<div class="addrow">' +
@@ -1564,6 +1659,19 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   /* ---------- events ---------- */
 
   function val(id) { var e = document.getElementById(id); return e ? e.value.trim() : ''; }
+
+  /* tapping a drawn pin focuses that stop */
+  railsHost.addEventListener('click', function (ev) {
+    var g = ev.target.closest ? ev.target.closest('.spin') : null;
+    if (!g) return;
+    var stack = g.closest('.mapstack');
+    var day = stack && stack.getAttribute('data-day');
+    var di = -1;
+    state.days.forEach(function (d, k) { if (d.id === day) di = k; });
+    if (di < 0) return;
+    ev.stopPropagation();
+    select(di, parseInt(g.getAttribute('data-sel'), 10), true);
+  });
 
   /* tapping a stop focuses it on that day's map */
   railsHost.addEventListener('click', function (ev) {
