@@ -48,17 +48,14 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .panel{display:none}
 #t-map:checked ~ .wrap #p-map,
 #t-days:checked ~ .wrap #p-days,
-#t-fix:checked ~ .wrap #p-fix,
 #t-shop:checked ~ .wrap #p-shop,
 #t-todo:checked ~ .wrap #p-todo{display:block}
 #t-map:checked ~ .tabbar label[for="t-map"],
 #t-days:checked ~ .tabbar label[for="t-days"],
-#t-fix:checked ~ .tabbar label[for="t-fix"],
 #t-shop:checked ~ .tabbar label[for="t-shop"],
 #t-todo:checked ~ .tabbar label[for="t-todo"]{color:var(--cyan)}
 #t-map:focus-visible ~ .tabbar label[for="t-map"],
 #t-days:focus-visible ~ .tabbar label[for="t-days"],
-#t-fix:focus-visible ~ .tabbar label[for="t-fix"],
 #t-shop:focus-visible ~ .tabbar label[for="t-shop"],
 #t-todo:focus-visible ~ .tabbar label[for="t-todo"]{outline:2px solid var(--cyan);outline-offset:-3px}
 
@@ -155,9 +152,54 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .move .m::before{content:"↓ ";opacity:.8}
 
 .todo{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:11px}
-.todo div{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:12px 14px;font-size:13.5px;min-width:0}
-.todo div b{display:block;color:var(--warn);font-weight:700;margin-bottom:2px}
-.todo div span{color:var(--muted);font-size:12.5px}
+.todo>div,.titem{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:12px 14px;font-size:13.5px;min-width:0}
+.todo>div b,.titem b{display:block;color:var(--warn);font-weight:700;margin-bottom:2px}
+.todo>div span,.titem>span{color:var(--muted);font-size:12.5px;display:block}
+.tchk{display:flex;align-items:flex-start;gap:9px;cursor:pointer}
+.tchk input{margin:3px 0 0;width:17px;height:17px;accent-color:var(--good);flex:0 0 auto}
+.titem.done b{color:var(--muted);text-decoration:line-through}
+.titem.done{opacity:.6}
+
+/* ---- editor ---- */
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.toolbar button,.addcard,.addrow button{font-family:var(--font-ui);cursor:pointer;
+  background:var(--panel);color:var(--cyan);border:1px solid var(--rule);border-radius:999px;
+  padding:6px 14px;font-size:13px;font-weight:700}
+.toolbar button[aria-pressed="true"]{background:var(--cyan);color:var(--ink);border-color:var(--cyan)}
+.toolbar button:focus-visible,.addcard:focus-visible,.addrow button:focus-visible,
+.ctrls button:focus-visible,.erow button:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.toolbar .hintline{color:var(--muted);font-size:12.5px}
+.ctrls{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.ctrls button{font-family:var(--font-ui);cursor:pointer;background:var(--panel-2);color:var(--muted);
+  border:1px solid var(--rule);border-radius:7px;padding:3px 10px;font-size:11.5px;font-weight:700}
+.ctrls button:hover{color:var(--fg)}
+.ctrls button.del{color:var(--bad)}
+.addrow{display:flex;gap:8px;flex-wrap:wrap;padding:12px 0 2px}
+.addcard{display:block;width:100%;margin-top:11px;padding:11px}
+.editor{background:var(--panel-2);border:1px solid var(--rule);border-radius:10px;padding:13px 14px;margin:10px 0;
+  display:flex;flex-direction:column;gap:9px}
+.editor.wide{grid-column:1/-1}
+.editor label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted);min-width:0}
+.editor label.chk{flex-direction:row;align-items:center;gap:8px}
+.editor label.chk input{width:17px;height:17px;accent-color:var(--warn)}
+.editor input[type="text"],.editor textarea{font-family:var(--font-ui);font-size:14px;color:var(--fg);
+  background:var(--bg);border:1px solid var(--rule);border-radius:7px;padding:8px 10px;width:100%;resize:vertical}
+.editor input:focus,.editor textarea:focus{outline:none;border-color:var(--cyan)}
+.erow{display:flex;gap:8px;margin-top:2px}
+.erow button{font-family:var(--font-ui);cursor:pointer;background:var(--cyan);color:var(--ink);border:0;
+  border-radius:7px;padding:8px 18px;font-size:13px;font-weight:700}
+.erow button.ghost{background:transparent;color:var(--muted);border:1px solid var(--rule)}
+.backup{margin-top:22px;background:var(--panel);border:1px solid var(--rule);border-radius:11px;padding:14px 16px}
+.backup summary{cursor:pointer;font-weight:700;font-size:14px}
+.backup .inner{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.backup p{margin:0;color:var(--muted);font-size:12.5px}
+.backup textarea{font-family:var(--font-num);font-size:11px;color:var(--fg);background:var(--bg);
+  border:1px solid var(--rule);border-radius:7px;padding:9px;width:100%;min-height:80px;resize:vertical}
+.backup .erow button.warn{background:var(--warn)}
+#flash{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));
+  z-index:40;background:var(--panel-2);border:1px solid var(--cyan);color:var(--fg);
+  border-radius:999px;padding:9px 18px;font-size:13px;font-weight:700;box-shadow:0 6px 24px rgba(0,0,0,.45);
+  max-width:calc(100vw - 32px);text-align:center}
 .foot{margin-top:30px;padding-top:14px;border-top:1px solid var(--rule);color:var(--muted);font-size:12px}
 
 /* ---- bottom tab bar ---- */
@@ -178,7 +220,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 @media print{
   :root{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .panel{display:block!important;margin-bottom:34px}
-  .tabbar,.tabsel,.hint,.daypick{display:none!important}
+  .tabbar,.tabsel,.hint,.daypick,.toolbar,.ctrls,.addrow,.addcard,.backup,#flash{display:none!important}
   .appbar{position:static}
   .wrap{padding-bottom:16px;max-width:none}
   .day,.find,.area,.todo div{break-inside:avoid}
@@ -189,7 +231,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
 <input class="tabsel" type="radio" name="tab" id="t-map" checked aria-label="路網">
 <input class="tabsel" type="radio" name="tab" id="t-days" aria-label="行程">
-<input class="tabsel" type="radio" name="tab" id="t-fix" aria-label="診斷">
 <input class="tabsel" type="radio" name="tab" id="t-shop" aria-label="逛街">
 <input class="tabsel" type="radio" name="tab" id="t-todo" aria-label="待辦">
 <style>html,body{background:#23272c}img{max-width:100%}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
@@ -253,6 +294,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <a href="#d5">D5 大阪</a>
     <a href="#d6">D6 離境</a>
   </nav>
+  <div class="toolbar"><button type="button" data-editbtn aria-pressed="false">編輯</button><span class="hintline">新增、修改、調整順序；改動只存在這台裝置</span></div>
+  <div id="days-host">
 
   <article class="day" id="d1">
     <header><span class="d">第一天</span><h3>抵達 → 直接往南玩</h3><span class="tot">全日都在堺筋線上</span></header>
@@ -363,92 +406,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
       <div class="step"><div class="t">11:30</div><div class="c"><div class="name">關西機場 報到</div><div class="det">逛免稅＋退稅，行程結束</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%96%A2%E8%A5%BF%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF%20%E7%AC%AC1%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB" target="_blank" rel="noopener">地圖</a></div></div></div>
     </div>
   </article>
-</section>
-
-<!-- ============ 診斷 ============ -->
-<section class="panel" id="p-fix" aria-labelledby="h-fix">
-  <div class="phead"><span class="chip" id="h-fix">繞路診斷</span><p>4 項調整 · 3 天不用改</p></div>
-  <div class="finds">
-
-    <div class="find sev2">
-      <span class="tag">路線重點</span>
-      <h3>新世界留在 D3，但「在北濱站內直接轉車」，不要先回飯店</h3>
-      <p>想保留「一條線下去逛新世界」的話——<b>京阪北濱站和堺筋線北濱站是同一個站體，站內就能轉乘</b>。所以從京都回來不必先回飯店：祇園四條 →（京阪特急 50 分）→ 北濱 →（站內轉堺筋線直達 12 分）→ 惠美須町，一路到底，大約 <span class="num">17:40</span> 就能站在通天閣底下。</p>
-      <p class="why">原本排「回飯店放東西稍微休息」再出門，會多花約 <span class="num">20 分鐘</span>加上重新出門的心理成本。真的想放東西也沒關係——北濱站走到飯店只要 5 分鐘，來回約 15 分。</p>
-      <div class="ba">
-        <div class="bef"><h4>原本</h4><div class="flow">
-          <s>祇園四條</s><u>京阪50分</u><s>北濱</s><u>出站走5分</u><s>飯店休息</s><u>再走5分</u><s>北濱</s><u>堺筋線12分</u><s>惠美須町</s>
-        </div></div>
-        <div class="aft"><h4>建議</h4><div class="flow">
-          <s>祇園四條</s><u>京阪特急50分</u><s>北濱（站內轉乘）</s><u>堺筋線直達12分</u><s>惠美須町・新世界</s><u>堺筋線直達12分</u><s>北濱</s>
-        </div></div>
-      </div>
-      <p>代價是這天會到 <span class="num">21:00</span> 才回飯店，而隔天神戶要 <span class="num">07:25</span> 出門。京都那段要壓緊，16:30 從祇園四條上車。</p>
-    </div>
-
-    <div class="find sev3">
-      <span class="tag">新增 · 順路</span>
-      <h3>難波八阪神社排進 D5，剛好在往天王寺的路上</h3>
-      <p>難波八阪神社在 <span class="num">34.6616, 135.4967</span>，從道頓堀走過去 Google 實測只要 <span class="num">8 分鐘</span>，而且它在道頓堀的<b>西南邊</b>——正好是往難波站、再往天王寺的方向。從神社搭車到阿倍野 HARUKAS <span class="num">19 分</span>。</p>
-      <p class="why">換句話說它不是插隊，是把 D5 下午串成一條直線：心齋橋 → 道頓堀 → 八阪神社 → 難波 → 天王寺。整天只剩回飯店那一段 7 分鐘的回程，不算繞路。</p>
-      <div class="ba">
-        <div class="bef"><h4>原本 D5</h4><div class="flow">
-          <s>心齋橋午餐逛街</s><u>御堂筋7分</u><s>HARUKAS</s><u>御堂筋7分</u><s>心齋橋晚餐</s>
-        </div></div>
-        <div class="aft"><h4>建議 D5</h4><div class="flow">
-          <s>心齋橋午餐逛街</s><u>走8分</u><s>難波八阪神社</s><u>19分</u><s>HARUKAS 日落</s><u>御堂筋7分</u><s>道頓堀晚餐採買</s><u>走回</u><s>FLAG</s>
-        </div></div>
-      </div>
-      <p>神社免費參拜，開放時間請以官網／現場公告為準；巨型獅子殿要白天拍才好看，所以排在 <span class="num">15:00</span>。這樣 D5 只有 5 個點，不會太滿。</p>
-    </div>
-
-    <div class="find sev1">
-      <span class="tag">嚴重 · 方向搞反</span>
-      <h3>D1 晚餐在「日本橋」，不是梅田——當晚別往北跑</h3>
-      <p>Google 地圖查到「新宿燒肉 牛舌之檸檬 大阪本店」位於 <span class="num">34.6667, 135.5051</span>，就在黑門市場／日本橋旁邊，屬於南區。如果當晚先北上梅田（LUCUA、HEP FIVE）逛，再殺回南邊吃 <span class="num">20:30</span>，等於南北對穿多繞 <span class="num">30 分鐘</span>以上。</p>
-      <p class="why">好消息是：北濱、長堀橋（心齋橋）、日本橋三站全都在<b>堺筋線同一條線上</b>，當晚可以一條線走到底、完全不轉乘。</p>
-      <div class="ba">
-        <div class="bef"><h4>常見走法</h4><div class="flow">
-          <s>北濱</s><u>御堂筋</u><s>梅田逛街</s><u>御堂筋+走路</u><s>心齋橋</s><u>走路</u><s>日本橋 20:30 晚餐</s><u>堺筋線</u><s>北濱</s>
-        </div></div>
-        <div class="aft"><h4>建議</h4><div class="flow">
-          <s>北濱</s><u>堺筋線2站4分</u><s>長堀橋→美國村・心齋橋筋 買鞋</s><u>走路10分</u><s>道頓堀</s><u>走路8分</u><s>日本橋 20:30 牛舌之檸檬</s><u>堺筋線4站8分</u><s>北濱</s>
-        </div></div>
-      </div>
-      <p>梅田留到 D4 神戶回程那天就好——行程表本來就排在那天，很正確。</p>
-    </div>
-
-    <div class="find sev2">
-      <span class="tag">時間風險</span>
-      <h3>D4 神戶 09:00 集合，抓「約 1 小時」會踩線</h3>
-      <p>Google 實測：飯店 → JR 大阪站需 <span class="num">16 分</span>；JR 大阪站 → JR 舞子站 <span class="num">48–49 分</span>、<span class="num">¥840</span>。出舞子站再走 <span class="num">5 分</span>到橋的科學館 2F。加起來約 <span class="num">70 分鐘</span>，不是 60 分鐘。</p>
-      <p class="why">要特別注意：<b>JR 新快速不停舞子</b>，要搭「快速」。別在大阪站傻傻上了新快速，會直接被載到明石。</p>
-      <div class="ba">
-        <div class="bef"><h4>只抓 1 小時</h4><div class="flow"><s>移動 約1hr</s><u>?</u><s>09:00 集合</s></div></div>
-        <div class="aft"><h4>建議時刻</h4><div class="flow"><s>07:25 出飯店</s><u>16分</u><s>07:41 JR大阪站</s><u>快速49分</u><s>08:30 JR舞子</s><u>走5分</u><s>08:40 橋的科學館</s><u>緩衝20分</u><s>09:00 集合</s></div></div>
-      </div>
-      <p>飯店早餐 <span class="num">06:30</span> 開門，吃了會很趕；這天建議改吃梅田或車站便利商店，或前一晚先買好。</p>
-    </div>
-
-    <div class="find sev3">
-      <span class="tag">小繞路</span>
-      <h3>D3 京都：中村藤吉要放最後一站，不要吃完又往東回頭</h3>
-      <p>中村藤吉四條店在京都高島屋 S.C.，位於鴨川<b>西岸</b>；京阪祇園四條站在<b>東岸</b>。若在花見小路之後過橋吃完抹茶、又折回東岸逛，會白走約 <span class="num">8 分鐘</span>。</p>
-      <div class="ba">
-        <div class="bef"><h4>容易變成</h4><div class="flow"><s>花見小路</s><u>過橋</u><s>中村藤吉</s><u>再過橋</u><s>祇園續逛</s><u>第三次</u><s>祇園四條站</s></div></div>
-        <div class="aft"><h4>建議順序</h4><div class="flow"><s>八坂神社・圓山公園</s><u>走路</u><s>祇園・花見小路</s><u>過四条大橋</u><s>中村藤吉（最後一站）</s><u>回走4分</u><s>祇園四條站→京阪特急直達北濱</s></div></div>
-      </div>
-      <p class="why">高島屋樓下雖然直通阪急京都線，但阪急只到梅田，對住北濱的你們不順；<b>京阪祇園四條 → 北濱特急直達約 50 分</b>仍是最佳解。</p>
-    </div>
-
-    <div class="find ok">
-      <span class="tag">排得很好 · 不用改</span>
-      <h3>這三天的動線沒有問題</h3>
-      <p><b>D2 USJ</b>：北濱 → 淀屋橋 → 梅田 → JR 大阪站 → 環球城，單程約 <span class="num">28 分</span>，去回同路線，沒有任何回頭路。</p>
-      <p><b>D4 神戶</b>：舞子 → 三宮（<span class="num">25 分</span>）→ 神戶牛午餐 → JR 新快速直達大阪站（<span class="num">21–30 分</span>）→ 梅田逛街 → 梅田藍天大廈夜景 → 回北濱（<span class="num">16 分</span>）。<b>這天排得最漂亮</b>，一路由西往東收回來，零繞路。</p>
-      <p><b>勝尾寺別排進 D5</b>。勝尾寺在箕面（大阪最北），和心齋橋換房＋天王寺完全反方向，單趟就要 <span class="num">1.5 小時</span>。整天收束在南區才順。</p>
-    </div>
-
   </div>
 </section>
 
@@ -484,7 +441,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 <!-- ============ 待辦 ============ -->
 <section class="panel" id="p-todo" aria-labelledby="h-todo">
   <div class="phead"><span class="chip" id="h-todo">出發前要訂</span><p>這幾項不先訂會卡住行程</p></div>
-  <div class="todo">
+  <div class="toolbar"><button type="button" data-editbtn aria-pressed="false">編輯</button><span class="hintline">可以勾選、修改、新增項目</span></div>
+  <div class="todo" id="todo-host">
     <div><b>明石海峽大橋 塔頂體驗</b><span>D4 上午 · 一定要線上預約，名額有限</span></div>
     <div><b>通天閣 展望台</b><span>D3 晚上 · 採時間預約制，傍晚場次會賣完</span></div>
     <div><b>JR HARUKA 指定席</b><span>出發前一個月同日 10:00（日本時間）開放，要先換票</span></div>
@@ -493,17 +451,364 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <div><b>餐廳訂位</b><span>神戶牛鐵板燒、牛舌之檸檬</span></div>
     <div><b>入境準備</b><span>Visit Japan Web、ICOCA／西瓜卡、eSIM、旅平險</span></div>
   </div>
+  <details class="backup">
+    <summary>備份 / 換裝置 / 回復原狀</summary>
+    <div class="inner">
+      <p>你的修改只存在目前這台裝置的瀏覽器裡，不會傳給別人，也不會跟著網址走。要換手機或分享給同行的人，用「匯出」複製一段文字，在另一台貼進來按「匯入」。</p>
+      <div class="erow">
+        <button type="button" id="io-export">匯出備份</button>
+        <button type="button" class="ghost" id="io-import">匯入備份</button>
+        <button type="button" class="ghost warn" id="io-reset">回復原始行程</button>
+      </div>
+      <label for="io-box" style="font-size:12px;color:var(--muted)">備份內容</label>
+      <textarea id="io-box" spellcheck="false" placeholder="按「匯出備份」會把內容放在這裡；要匯入就把備份貼進來再按「匯入備份」"></textarea>
+    </div>
+  </details>
   <p class="foot">交通時間與距離取自 Google 地圖實測（JR 大阪→舞子 48–49 分 ¥840；道頓堀→難波八阪神社 步行 8 分；八阪神社→HARUKAS 19 分；HARUKAS→通天閣 步行 19 分；飯店→JR 大阪站 16 分）。通天閣票價與營業時間依官方公告。實際班次與票價請於出發前再確認一次。</p>
 </section>
 
 </div>
 
+<div id="flash" hidden></div>
+
 <nav class="tabbar">
   <label for="t-map"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 3 6.5v13L9 17l6 2.5 6-2.5v-13L15 6.5 9 4Z"/><path d="M9 4v13M15 6.5v13"/></svg>路網</label>
   <label for="t-days"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>行程</label>
-  <label for="t-fix"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 2.5 20h19L12 4Z"/><path d="M12 10v4M12 17.2v.1"/></svg>診斷</label>
   <label for="t-shop"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1.2 12H6.2L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>逛街</label>
   <label for="t-todo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9.5 17 4 11.5"/></svg>待辦</label>
 </nav>
+
+<script id="trip-data" type="application/json">{"days":[{"id":"d1","label":"第一天","date":"","title":"抵達 → 直接往南玩","tot":"全日都在堺筋線上","items":[{"k":"s","time":"13:10","name":"關西機場 KIX 第一航廈","pin":"","det":"入境、領行李、\u003cb>HARUKA 要先換好票\u003c/b>，步行至 2 樓 JR 關西機場站","hi":false,"q":"%E9%96%A2%E8%A5%BF%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF%20%E7%AC%AC1%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB","url":""},{"k":"m","lines":["JR HARUKA 特急 約50分 → JR大阪站（梅北地下月台）","站內步行約10分 → Metro 梅田站 → 御堂筋線 2 站 → 淀屋橋","京阪本線 1 站 → 北濱 → 步行 5 分"]},{"k":"s","time":"15:30","name":"大阪北濱布萊頓城市飯店","pin":"★ CHECK-IN","det":"入住 15:00 起 · 早餐要加購 · 連住 4 晚","hi":false,"q":"%E3%83%9B%E3%83%86%E3%83%AB%E3%83%96%E3%83%A9%E3%82%A4%E3%83%88%E3%83%B3%E3%82%B7%E3%83%86%E3%82%A3%E5%A4%A7%E9%98%AA%E5%8C%97%E6%B5%9C","url":"https://kitahama.brightonhotels.co.jp/"},{"k":"m","lines":["堺筋線 北濱 → 長堀橋 2站 4分"]},{"k":"s","time":"16:30","name":"美國村（アメ村）","pin":"買鞋先來這","det":"三角公園周邊 · atmos 心齋橋、BILLY'S ENT、Pigsty 古著 · 多數店 \u003cb>20:00\u003c/b> 打烊，所以先逛","hi":true,"q":"%E3%82%A2%E3%83%A1%E3%83%AA%E3%82%AB%E6%9D%91%20%E4%B8%89%E8%A7%92%E5%85%AC%E5%9C%92%20%E5%A4%A7%E9%98%AA","url":""},{"k":"m","lines":["步行 約5分"]},{"k":"s","time":"17:40","name":"心齋橋筋商店街","pin":"","det":"ABC-MART GRAND STAGE、大國藥妝、UNIQLO／GU、大丸心齋橋本館退稅 · 多開到 \u003cb>21:00\u003c/b>","hi":true,"q":"%E5%BF%83%E6%96%8E%E6%A9%8B%E7%AD%8B%E5%95%86%E5%BA%97%E8%A1%97","url":"https://www.shinsaibashi.or.jp/"},{"k":"m","lines":["步行 約10分"]},{"k":"s","time":"18:50","name":"道頓堀","pin":"","det":"固力果看板、章魚燒 · 建議停留 \u003cb>1.5 小時\u003c/b>","hi":true,"q":"%E9%81%93%E9%A0%93%E5%A0%80","url":""},{"k":"m","lines":["步行 約8分（往黑門市場方向）"]},{"k":"s","time":"20:30","name":"新宿燒肉 牛舌之檸檬 大阪本店","pin":"","det":"同事推薦的牛舌定食 · 約 \u003cb>¥2,500\u003c/b> · 有中文菜單 · 位於日本橋／黑門市場旁","hi":false,"q":"%E6%96%B0%E5%AE%BF%E7%84%BC%E8%82%89%20%E7%89%9B%E3%82%BF%E3%83%B3%E3%81%AE%E3%83%AC%E3%83%A2%E3%83%B3%20%E5%A4%A7%E9%98%AA%E6%9C%AC%E5%BA%97","url":""},{"k":"m","lines":["堺筋線 日本橋 → 北濱 直達 4 站 約8分"]},{"k":"s","time":"22:10","name":"回飯店","pin":"","det":"","hi":false,"q":"","url":""}]},{"id":"d2","label":"第二天","date":"","title":"日本環球影城 一日","tot":"單程約 28 分","items":[{"k":"s","time":"07:30","name":"飯店早餐","pin":"","det":"6:30–10:00（最後入場 9:45），或吃梅田車站的麥當勞","hi":false,"q":"","url":""},{"k":"m","lines":["步行5分 → 北濱 → 淀屋橋 → 御堂筋線 → 梅田 → JR大阪站（合計約16分）"]},{"k":"s","time":"08:20","name":"JR 大阪站","pin":"","det":"大阪環狀線直達櫻島行，或於 \u003cb>西九條站\u003c/b>轉 JR 櫻島線","hi":false,"q":"JR%E5%A4%A7%E9%98%AA%E9%A7%85","url":""},{"k":"m","lines":["JR 約12分 → 環球城站"]},{"k":"s","time":"08:40","name":"日本環球影城 USJ","pin":"","det":"建議買\u003cb>快速通關券\u003c/b>（約開園前兩個月開賣）· \u003cb>ALL DAY LONG\u003c/b>","hi":false,"q":"%E3%83%A6%E3%83%8B%E3%83%90%E3%83%BC%E3%82%B5%E3%83%AB%E3%83%BB%E3%82%B9%E3%82%BF%E3%82%B8%E3%82%AA%E3%83%BB%E3%82%B8%E3%83%A3%E3%83%91%E3%83%B3","url":"https://www.usj.co.jp/web/ja/jp"},{"k":"m","lines":["原路回程 約28分"]},{"k":"s","time":"20:00","name":"晚餐","pin":"","det":"環球城市漫步 Shake Shack，或附近超市買打折食物","hi":false,"q":"","url":""}]},{"id":"d3","label":"第三天","date":"","title":"京都 清水寺 → 祇園 → 新世界","tot":"北濱站內轉乘，不回飯店","items":[{"k":"s","time":"08:20","name":"北濱站（京阪本線）","pin":"","det":"北濱是\u003cb>特急停靠站\u003c/b>，直達不用轉車","hi":false,"q":"%E4%BA%AC%E9%98%AA%20%E5%8C%97%E6%B5%9C%E9%A7%85","url":""},{"k":"m","lines":["京阪本線特急 約50分 → 七條站","出站直上計程車 約10分"]},{"k":"s","time":"09:40","name":"清水寺","pin":"","det":"仁王門／三重塔／本堂清水舞台／奧之院／音羽瀑布 · 建議停留 \u003cb>1.5 小時\u003c/b>","hi":false,"q":"%E6%B8%85%E6%B0%B4%E5%AF%BA","url":"https://www.kiyomizudera.or.jp/"},{"k":"m","lines":["步行下坡"]},{"k":"s","time":"11:10","name":"三年坂・二年坂","pin":"","det":"法觀寺五重塔 · 順路在這一帶吃午餐","hi":false,"q":"%E7%94%A3%E5%AF%A7%E5%9D%82%20%E4%BA%8C%E5%B9%B4%E5%9D%82%20%E4%BA%AC%E9%83%BD","url":""},{"k":"m","lines":["步行（寧寧之道）約15分"]},{"k":"s","time":"13:15","name":"八坂神社・圓山公園","pin":"","det":"建議停留 \u003cb>45 分鐘\u003c/b>","hi":false,"q":"%E5%85%AB%E5%9D%82%E7%A5%9E%E7%A4%BE%20%E4%BA%AC%E9%83%BD","url":"https://www.yasaka-jinja.or.jp/"},{"k":"m","lines":["步行 約10分"]},{"k":"s","time":"14:15","name":"祇園・花見小路","pin":"","det":"建議停留 \u003cb>1 小時\u003c/b>","hi":false,"q":"%E8%8A%B1%E8%A6%8B%E5%B0%8F%E8%B7%AF%E9%80%9A%20%E7%A5%87%E5%9C%92","url":""},{"k":"m","lines":["過四条大橋 步行約8分"]},{"k":"s","time":"15:30","name":"中村藤吉 京都高島屋 S.C. 店","pin":"擺最後一站","det":"抹茶巴菲！吃完直接回走 4 分到祇園四條站，不要再往東逛回去","hi":true,"q":"%E4%B8%AD%E6%9D%91%E8%97%A4%E5%90%89%20%E4%BA%AC%E9%83%BD%E9%AB%98%E5%B3%B6%E5%B1%8BS.C.%E5%BA%97","url":""},{"k":"m","lines":["步行4分 → 祇園四條站 → 京阪本線特急 約50分 直達北濱"]},{"k":"s","time":"17:25","name":"北濱站","pin":"站內轉乘，不出站","det":"京阪北濱站與堺筋線北濱站同一個站體 · 想放東西的話出站走 5 分到飯店，來回約 15 分","hi":true,"q":"%E5%8C%97%E6%B5%9C%E9%A7%85","url":""},{"k":"m","lines":["堺筋線 北濱 → 惠美須町 直達 約12分"]},{"k":"s","time":"17:50","name":"通天閣 展望台","pin":"","det":"大人 \u003cb>¥1,500\u003c/b> · 9:00–21:45（最後入場 21:15）· \u003cb>採時間預約制，傍晚常售完，先上官網預約\u003c/b> · 展望台有 Billiken 摸腳底許願，另有 TOWER SLIDER 滑梯（另收費）","hi":true,"q":"%E9%80%9A%E5%A4%A9%E9%96%A3","url":"https://www.tsutenkaku.co.jp/"},{"k":"m","lines":["步行 約5分"]},{"k":"s","time":"19:00","name":"ジャンジャン横丁 串炸晚餐","pin":"","det":"熱鬧的是這條（不是新世界市場）· 八重勝（排隊名店）、元祖串かつ だるま 新世界總本店，1 串約 \u003cb>¥130–250\u003c/b> · \u003cb>醬汁不能二沾\u003c/b>","hi":true,"q":"%E3%82%B8%E3%83%A3%E3%83%B3%E3%82%B8%E3%83%A3%E3%83%B3%E6%A8%AA%E4%B8%81%20%E6%96%B0%E4%B8%96%E7%95%8C","url":""},{"k":"m","lines":["堺筋線 惠美須町 → 北濱 直達 約12分"]},{"k":"s","time":"21:00","name":"回飯店","pin":"","det":"明天 \u003cb>07:25\u003c/b> 要出門去神戶，今晚請務必早睡","hi":false,"q":"","url":""}]},{"id":"d4","label":"第四天","date":"","title":"神戶 明石海峽大橋 → 梅田收尾","tot":"動線最漂亮的一天","items":[{"k":"s","time":"07:25","name":"出飯店","pin":"別睡過頭","det":"早餐改吃梅田或便利商店，飯店 buffet 會來不及","hi":true,"q":"","url":""},{"k":"m","lines":["步行＋御堂筋線 約16分 → JR大阪站"]},{"k":"s","time":"07:41","name":"JR 大阪站","pin":"","det":"搭 \u003cb>JR 神戶線「快速」\u003c/b>（新快速不停舞子！）· \u003cb>¥840\u003c/b>","hi":false,"q":"JR%E5%A4%A7%E9%98%AA%E9%A7%85","url":""},{"k":"m","lines":["JR 快速 約49分 → JR舞子站，出站步行5分"]},{"k":"s","time":"09:00","name":"明石海峽大橋 塔頂體驗","pin":"","det":"集合地點：橋的科學館 2F Akashi Kaikyo Bridge Exhibition Center · 9:10 開始 · \u003cb>需線上預約\u003c/b>，約 ¥6,600","hi":false,"q":"%E6%A9%8B%E3%81%AE%E7%A7%91%E5%AD%A6%E9%A4%A8%20%E8%88%9E%E5%AD%90","url":"https://www.jb-honshi.co.jp/bridgeworld/"},{"k":"m","lines":["JR 約25分 → JR三ノ宮站，步行約6分"]},{"k":"s","time":"13:00","name":"KOBE STEAK Tsubasa 神戶牛","pin":"","det":"三宮站西南約 400 公尺 · \u003cb>記得先訂位\u003c/b>（另一個常見選擇是 Mouriya，是不同的店）","hi":false,"q":"KOBE%20STEAK%20Tsubasa%20%E7%A5%9E%E6%88%B8","url":""},{"k":"m","lines":["步行"]},{"k":"s","time":"14:30","name":"三宮中心街・生田神社","pin":"","det":"可選，時間不夠就直接回大阪","hi":false,"q":"%E7%94%9F%E7%94%B0%E7%A5%9E%E7%A4%BE%20%E7%A5%9E%E6%88%B8","url":"https://www.ikutajinja.or.jp/"},{"k":"m","lines":["JR 神戶線新快速 約21–30分 直達 → JR大阪站"]},{"k":"s","time":"16:00","name":"梅田商圈逛街","pin":"","det":"LUCUA／HEP FIVE 摩天輪／Grand Front／阪急百貨","hi":false,"q":"%E5%A4%A7%E9%98%AA%E9%A7%85%20%E6%A2%85%E7%94%B0","url":""},{"k":"m","lines":["步行 約10分"]},{"k":"s","time":"17:40","name":"梅田藍天大廈 空中庭園展望台","pin":"","det":"11 月日落約 \u003cb>16:50\u003c/b>，想拍黃昏就提早到；在地夜景地標","hi":false,"q":"%E6%A2%85%E7%94%B0%E3%82%B9%E3%82%AB%E3%82%A4%E3%83%93%E3%83%AB%20%E7%A9%BA%E4%B8%AD%E5%BA%AD%E5%9C%92%E5%B1%95%E6%9C%9B%E5%8F%B0","url":"https://www.skybldg.co.jp/"},{"k":"m","lines":["步行回梅田"]},{"k":"s","time":"19:00","name":"梅田晚餐 → 回北濱","pin":"","det":"御堂筋線梅田→淀屋橋 2 站，回飯店約 \u003cb>16 分\u003c/b>","hi":false,"q":"","url":""}]},{"id":"d5","label":"第五天","date":"","title":"換飯店 → 難波八阪神社 → 天王寺","tot":"5 個點，一路往南","items":[{"k":"s","time":"11:00","name":"北濱 CHECK-OUT","pin":"","det":"睡飽再退房，吃早午餐","hi":false,"q":"","url":""},{"k":"m","lines":["堺筋線 北濱 → 長堀橋 2站4分 → 步行8分"]},{"k":"s","time":"11:30","name":"HOTEL THE FLAG 心齋橋","pin":"★ 先寄放行李","det":"15:00 才能入住，行李先寄放 · 早餐要加購","hi":false,"q":"HOTEL%20THE%20FLAG%20Shinsaibashi","url":""},{"k":"m","lines":["步行"]},{"k":"s","time":"12:00","name":"心齋橋／道頓堀 午餐","pin":"","det":"拉麵或大阪燒","hi":false,"q":"%E9%81%93%E9%A0%93%E5%A0%80","url":""},{"k":"m","lines":["步行"]},{"k":"s","time":"13:00","name":"心齋橋筋 逛街採買","pin":"","det":"D1 沒買完的補齊 · 建議停留 \u003cb>1.5–2 小時\u003c/b>","hi":false,"q":"%E5%BF%83%E6%96%8E%E6%A9%8B%E7%AD%8B%E5%95%86%E5%BA%97%E8%A1%97","url":"https://www.shinsaibashi.or.jp/"},{"k":"m","lines":["從道頓堀步行 約8分（往西南）"]},{"k":"s","time":"15:00","name":"難波八阪神社","pin":"新增","det":"巨型獅子殿，祈求勝運 · \u003cb>免費參拜\u003c/b> · 開放時間依神社公告 · 建議停留 \u003cb>30–40 分\u003c/b> · 白天拍才好看","hi":true,"q":"%E9%9B%A3%E6%B3%A2%E5%85%AB%E9%98%AA%E7%A5%9E%E7%A4%BE","url":"https://nambayasaka.jp/"},{"k":"m","lines":["步行至難波站 → 御堂筋線 → 天王寺，合計約19分"]},{"k":"s","time":"16:10","name":"阿倍野 HARUKAS 300 展望台","pin":"","det":"天王寺站 9／10 號出口直通 · 日落約 \u003cb>16:50\u003c/b>，黃昏接夜景一次看完 · 部分關西周遊券可折抵","hi":false,"q":"%E3%81%82%E3%81%B9%E3%81%AE%E3%83%8F%E3%83%AB%E3%82%AB%E3%82%B9300%20%E5%B1%95%E6%9C%9B%E5%8F%B0","url":"https://www.abenoharukas-300.jp/"},{"k":"m","lines":["御堂筋線 天王寺 → 心齋橋 直達 約7分"]},{"k":"s","time":"18:10","name":"道頓堀 晚餐 ＋ 藥妝伴手禮採買","pin":"","det":"順路經過黑門市場 · 買完直接散步回飯店放戰利品","hi":false,"q":"%E9%81%93%E9%A0%93%E5%A0%80","url":""},{"k":"m","lines":["步行回心齋橋"]},{"k":"s","time":"20:30","name":"HOTEL THE FLAG 心齋橋","pin":"","det":"全天 5 個點，只有最後回飯店那 7 分鐘是回程","hi":false,"q":"HOTEL%20THE%20FLAG%20Shinsaibashi","url":""}]},{"id":"d6","label":"第六天","date":"","title":"前往機場","tot":"心齋橋 → KIX 約 50 分","items":[{"k":"s","time":"09:00","name":"飯店早餐 → CHECK-OUT","pin":"","det":"","hi":false,"q":"","url":""},{"k":"m","lines":["步行 → 御堂筋線 心齋橋 → 難波 1 站"]},{"k":"s","time":"10:30","name":"難波站 南海電鐵","pin":"","det":"Rapi:t \u003cb>需劃位\u003c/b>才有行李空間","hi":false,"q":"%E5%8D%97%E6%B5%B7%20%E9%9B%A3%E6%B3%A2%E9%A7%85","url":"https://www.nankai.co.jp/traffic/express/rapit.html"},{"k":"m","lines":["南海電鐵 Rapi:t 約38分"]},{"k":"s","time":"11:30","name":"關西機場 報到","pin":"","det":"逛免稅＋退稅，行程結束","hi":false,"q":"%E9%96%A2%E8%A5%BF%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF%20%E7%AC%AC1%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB","url":""}]}],"todo":[{"t":"明石海峽大橋 塔頂體驗","n":"D4 上午 · 一定要線上預約，名額有限","done":false},{"t":"通天閣 展望台","n":"D3 晚上 · 採時間預約制，傍晚場次會賣完","done":false},{"t":"JR HARUKA 指定席","n":"出發前一個月同日 10:00（日本時間）開放，要先換票","done":false},{"t":"南海電鐵 Rapi:t","n":"回程 · 要劃位才有行李空間","done":false},{"t":"USJ 快速通關券","n":"約開園前兩個月開賣，熱門日會完售","done":false},{"t":"餐廳訂位","n":"神戶牛鐵板燒、牛舌之檸檬","done":false},{"t":"入境準備","n":"Visit Japan Web、ICOCA／西瓜卡、eSIM、旅平險","done":false}]}</script>
+<script>
+/* Itinerary editor. The page renders fully without this file; booting here
+   replaces the static rails and todo grid with editable, locally-saved copies. */
+(function () {
+  var KEY = 'kansai.trip.v1';
+  var dataEl = document.getElementById('trip-data');
+  var railsHost = document.getElementById('days-host');
+  var todoHost = document.getElementById('todo-host');
+  if (!dataEl || !railsHost || !todoHost) return;
+
+  var BASE, state, editing = false;
+  try { BASE = JSON.parse(dataEl.textContent); } catch (e) { return; }
+
+  function clone(o) { return JSON.parse(JSON.stringify(o)); }
+
+  function load() {
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (raw) {
+        var v = JSON.parse(raw);
+        if (v && v.days && v.days.length) return v;
+      }
+    } catch (e) {}
+    return clone(BASE);
+  }
+
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(state)); }
+    catch (e) { flash('存不進瀏覽器（可能是無痕模式），這次的修改重整後會不見'); }
+  }
+
+  var flashT;
+  function flash(msg) {
+    var el = document.getElementById('flash');
+    if (!el) return;
+    el.textContent = msg;
+    el.hidden = false;
+    clearTimeout(flashT);
+    flashT = setTimeout(function () { el.hidden = true; }, 3200);
+  }
+
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+  function mapsUrl(q) {
+    return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q);
+  }
+
+  /* ---------- rendering ---------- */
+
+  function stopHtml(it, di, ii) {
+    var h = '<div class="step' + (it.hi ? ' hi' : '') + '" data-d="' + di + '" data-i="' + ii + '">';
+    h += '<div class="t">' + esc(it.time) + '</div><div class="c">';
+    h += '<div class="name">' + (it.name || '') +
+         (it.pin ? ' <span class="pin">' + esc(it.pin) + '</span>' : '') + '</div>';
+    if (it.det) h += '<div class="det">' + it.det + '</div>';
+    if (it.q || it.url) {
+      h += '<div class="links">';
+      if (it.q) h += '<a href="' + esc(mapsUrl(it.q)) + '" target="_blank" rel="noopener">地圖</a>';
+      if (it.url) h += '<a href="' + esc(it.url) + '" target="_blank" rel="noopener">官網</a>';
+      h += '</div>';
+    }
+    h += ctrls(di, ii);
+    h += '</div></div>';
+    return h;
+  }
+
+  function moveHtml(it, di, ii) {
+    var h = '<div class="move" data-d="' + di + '" data-i="' + ii + '"><div class="t"></div><div class="c">';
+    (it.lines || []).forEach(function (l) { h += '<div class="m">' + l + '</div>'; });
+    h += ctrls(di, ii);
+    h += '</div></div>';
+    return h;
+  }
+
+  function ctrls(di, ii) {
+    if (!editing) return '';
+    return '<div class="ctrls">' +
+      '<button type="button" data-act="up" data-d="' + di + '" data-i="' + ii + '" aria-label="上移">↑</button>' +
+      '<button type="button" data-act="down" data-d="' + di + '" data-i="' + ii + '" aria-label="下移">↓</button>' +
+      '<button type="button" data-act="edit" data-d="' + di + '" data-i="' + ii + '">編輯</button>' +
+      '<button type="button" class="del" data-act="del" data-d="' + di + '" data-i="' + ii + '">刪除</button>' +
+      '</div>';
+  }
+
+  function field(lbl, id, val, ph) {
+    return '<label><span>' + lbl + '</span><input id="' + id + '" type="text" value="' +
+      esc(val) + '" placeholder="' + esc(ph || '') + '"></label>';
+  }
+
+  function formHtml(it, di, ii) {
+    var h = '<div class="editor" data-d="' + di + '" data-i="' + ii + '">';
+    if (it.k === 's') {
+      h += field('時間', 'f-time', it.time, '例 16:30');
+      h += field('地點', 'f-name', it.name, '');
+      h += field('標記', 'f-pin', it.pin, '例 要先訂位（可留空）');
+      h += '<label><span>說明</span><textarea id="f-det" rows="3">' + esc(it.det) + '</textarea></label>';
+      h += field('Google 地圖搜尋字', 'f-q', it.q ? decodeURIComponent(it.q) : '', '例 通天閣');
+      h += field('官網網址', 'f-url', it.url, 'https://（可留空）');
+      h += '<label class="chk"><input id="f-hi" type="checkbox"' + (it.hi ? ' checked' : '') +
+           '><span>標成橘點（重點）</span></label>';
+    } else {
+      h += '<label><span>交通方式（一行一段）</span><textarea id="f-lines" rows="3">' +
+           esc((it.lines || []).join('\n')) + '</textarea></label>';
+    }
+    h += '<div class="erow"><button type="button" data-act="ok">儲存</button>' +
+         '<button type="button" class="ghost" data-act="cancel">取消</button></div></div>';
+    return h;
+  }
+
+  var openEdit = null;   // {d, i}
+
+  function renderDays() {
+    var out = '';
+    state.days.forEach(function (d, di) {
+      out += '<article class="day" id="' + esc(d.id) + '"><header>';
+      out += '<span class="d">' + esc(d.label) + '</span>';
+      if (d.date) out += '<span class="dt">' + esc(d.date) + '</span>';
+      out += '<h3>' + d.title + '</h3>';
+      if (d.tot) out += '<span class="tot">' + esc(d.tot) + '</span>';
+      out += '</header><div class="rail">';
+      d.items.forEach(function (it, ii) {
+        if (openEdit && openEdit.d === di && openEdit.i === ii) out += formHtml(it, di, ii);
+        else out += it.k === 's' ? stopHtml(it, di, ii) : moveHtml(it, di, ii);
+      });
+      if (editing) {
+        out += '<div class="addrow">' +
+          '<button type="button" data-act="add-stop" data-d="' + di + '">＋ 加地點</button>' +
+          '<button type="button" data-act="add-move" data-d="' + di + '">＋ 加交通</button>' +
+          '</div>';
+      }
+      out += '</div></article>';
+    });
+    railsHost.innerHTML = out;
+  }
+
+  function renderTodo() {
+    var out = '';
+    state.todo.forEach(function (t, i) {
+      out += '<div class="titem' + (t.done ? ' done' : '') + '">' +
+        '<label class="tchk"><input type="checkbox" data-act="toggle" data-i="' + i + '"' +
+        (t.done ? ' checked' : '') + '><b>' + esc(t.t) + '</b></label>' +
+        '<span>' + esc(t.n) + '</span>';
+      if (editing) {
+        out += '<div class="ctrls">' +
+          '<button type="button" data-act="tedit" data-i="' + i + '">編輯</button>' +
+          '<button type="button" class="del" data-act="tdel" data-i="' + i + '">刪除</button></div>';
+      }
+      out += '</div>';
+    });
+    if (openTodo !== null && state.todo[openTodo]) {
+      var t = state.todo[openTodo];
+      out += '<div class="editor wide" data-i="' + openTodo + '">' +
+        field('項目', 'f-tt', t.t, '') +
+        field('說明', 'f-tn', t.n, '') +
+        '<div class="erow"><button type="button" data-act="tok">儲存</button>' +
+        '<button type="button" class="ghost" data-act="tcancel">取消</button></div></div>';
+    }
+    if (editing) out += '<button type="button" class="addcard" data-act="tadd">＋ 新增一項</button>';
+    todoHost.innerHTML = out;
+  }
+
+  var openTodo = null;
+
+  function render() {
+    renderDays();
+    renderTodo();
+    document.querySelectorAll('[data-editbtn]').forEach(function (b) {
+      b.textContent = editing ? '完成編輯' : '編輯';
+      b.setAttribute('aria-pressed', editing ? 'true' : 'false');
+    });
+    document.body.classList.toggle('editing', editing);
+  }
+
+  /* ---------- events ---------- */
+
+  function val(id) { var e = document.getElementById(id); return e ? e.value.trim() : ''; }
+
+  railsHost.addEventListener('click', function (ev) {
+    var b = ev.target.closest('button[data-act]');
+    if (!b) return;
+    var act = b.getAttribute('data-act');
+    var di = parseInt(b.getAttribute('data-d'), 10);
+    var ii = parseInt(b.getAttribute('data-i'), 10);
+    var items = state.days[di] ? state.days[di].items : null;
+
+    if (act === 'edit') { openEdit = { d: di, i: ii }; render(); return; }
+    if (act === 'cancel') { openEdit = null; render(); return; }
+    if (act === 'del') {
+      items.splice(ii, 1); openEdit = null; save(); render(); flash('已刪除'); return;
+    }
+    if (act === 'up' && ii > 0) {
+      items.splice(ii - 1, 0, items.splice(ii, 1)[0]); save(); render(); return;
+    }
+    if (act === 'down' && ii < items.length - 1) {
+      items.splice(ii + 1, 0, items.splice(ii, 1)[0]); save(); render(); return;
+    }
+    if (act === 'add-stop') {
+      items.push({ k: 's', time: '', name: '新的地點', pin: '', det: '', hi: true, q: '', url: '' });
+      openEdit = { d: di, i: items.length - 1 }; save(); render(); return;
+    }
+    if (act === 'add-move') {
+      items.push({ k: 'm', lines: ['步行 約5分'] });
+      openEdit = { d: di, i: items.length - 1 }; save(); render(); return;
+    }
+    if (act === 'ok') {
+      var ed = b.closest('.editor');
+      var d2 = parseInt(ed.getAttribute('data-d'), 10);
+      var i2 = parseInt(ed.getAttribute('data-i'), 10);
+      var it = state.days[d2].items[i2];
+      if (it.k === 's') {
+        it.time = val('f-time');
+        it.name = val('f-name') || '未命名';
+        it.pin = val('f-pin');
+        it.det = val('f-det');
+        it.q = val('f-q') ? encodeURIComponent(val('f-q')) : '';
+        it.url = val('f-url');
+        var c = document.getElementById('f-hi');
+        it.hi = !!(c && c.checked);
+      } else {
+        it.lines = val('f-lines').split('\n').map(function (x) { return x.trim(); })
+          .filter(function (x) { return x; });
+      }
+      openEdit = null; save(); render(); flash('已儲存到這台裝置');
+      return;
+    }
+  });
+
+  todoHost.addEventListener('click', function (ev) {
+    var b = ev.target.closest('button[data-act]');
+    if (!b) return;
+    var act = b.getAttribute('data-act');
+    var i = parseInt(b.getAttribute('data-i'), 10);
+    if (act === 'tedit') { openTodo = i; render(); return; }
+    if (act === 'tcancel') { openTodo = null; render(); return; }
+    if (act === 'tdel') { state.todo.splice(i, 1); openTodo = null; save(); render(); flash('已刪除'); return; }
+    if (act === 'tadd') {
+      state.todo.push({ t: '新的項目', n: '', done: false });
+      openTodo = state.todo.length - 1; save(); render(); return;
+    }
+    if (act === 'tok') {
+      var ed = b.closest('.editor');
+      var k = parseInt(ed.getAttribute('data-i'), 10);
+      state.todo[k].t = val('f-tt') || '未命名';
+      state.todo[k].n = val('f-tn');
+      openTodo = null; save(); render(); flash('已儲存到這台裝置');
+      return;
+    }
+  });
+
+  todoHost.addEventListener('change', function (ev) {
+    var c = ev.target;
+    if (c.getAttribute && c.getAttribute('data-act') === 'toggle') {
+      var i = parseInt(c.getAttribute('data-i'), 10);
+      state.todo[i].done = c.checked;
+      save(); render();
+    }
+  });
+
+  document.querySelectorAll('[data-editbtn]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      editing = !editing;
+      openEdit = null; openTodo = null;
+      render();
+      flash(editing ? '編輯模式：可以新增、修改、調整順序' : '已離開編輯模式');
+    });
+  });
+
+  /* ---------- backup ---------- */
+
+  var ta = document.getElementById('io-box');
+  var btnExport = document.getElementById('io-export');
+  var btnImport = document.getElementById('io-import');
+  var btnReset = document.getElementById('io-reset');
+
+  if (btnExport) btnExport.addEventListener('click', function () {
+    ta.value = JSON.stringify(state);
+    ta.select();
+    try {
+      navigator.clipboard.writeText(ta.value).then(
+        function () { flash('已複製，貼到別的裝置就能同步'); },
+        function () { flash('已顯示在下面，請手動複製'); });
+    } catch (e) { flash('已顯示在下面，請手動複製'); }
+  });
+
+  if (btnImport) btnImport.addEventListener('click', function () {
+    var t = ta.value.trim();
+    if (!t) { flash('請先把備份內容貼進下面的框'); return; }
+    try {
+      var v = JSON.parse(t);
+      if (!v.days || !v.days.length) throw new Error('bad');
+      state = v; save(); render(); flash('已套用備份');
+    } catch (e) { flash('讀不懂這段內容，請確認是完整複製的備份'); }
+  });
+
+  if (btnReset) btnReset.addEventListener('click', function () {
+    if (!btnReset.dataset.armed) {
+      btnReset.dataset.armed = '1';
+      btnReset.textContent = '再按一次確認回復';
+      setTimeout(function () {
+        delete btnReset.dataset.armed;
+        btnReset.textContent = '回復原始行程';
+      }, 4000);
+      return;
+    }
+    delete btnReset.dataset.armed;
+    btnReset.textContent = '回復原始行程';
+    state = clone(BASE);
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    render();
+    flash('已回復成原始行程');
+  });
+
+  /* The published site carries data.json next to index.html. Only people with
+     write access to the repository can change it, so for everyone else the
+     shared itinerary is read-only; their own edits stay in their browser. */
+  function boot() { state = load(); render(); }
+
+  if (window.fetch && location.protocol.indexOf('http') === 0) {
+    fetch('data.json', { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) { if (j && j.days && j.days.length) BASE = j; })
+      .catch(function () {})
+      .then(boot, boot);
+  } else {
+    boot();
+  }
+})();
+</script>
 </body>
 </html>
