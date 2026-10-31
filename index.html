@@ -144,6 +144,12 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .step .name .pin{color:var(--warn);font-size:11.5px;font-weight:700;margin-left:6px;white-space:nowrap}
 .step .det{font-size:13px;color:var(--muted);margin-top:2px}
 .step .det b{color:#d8dee4;font-weight:500}
+.step .links{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.step .links a{display:inline-flex;align-items:center;gap:4px;background:var(--panel-2);border:1px solid var(--rule);
+  border-radius:999px;padding:3px 11px;font-size:11.5px;font-weight:700;color:var(--cyan);text-decoration:none}
+.step .links a:hover{border-color:var(--cyan)}
+.step .links a:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.step .links a::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.7}
 .move>.c{padding:0 0 0 18px;border-left:2px solid #4b5a51;min-width:0}
 .move .m{font-size:12px;color:var(--blue);padding:3px 0 3px 2px}
 .move .m::before{content:"↓ ";opacity:.8}
@@ -251,17 +257,17 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <article class="day" id="d1">
     <header><span class="d">第一天</span><h3>抵達 → 直接往南玩</h3><span class="tot">全日都在堺筋線上</span></header>
     <div class="rail">
-      <div class="step"><div class="t">13:10</div><div class="c"><div class="name">關西機場 KIX 第一航廈</div><div class="det">入境、領行李、<b>HARUKA 要先換好票</b>，步行至 2 樓 JR 關西機場站</div></div></div>
+      <div class="step"><div class="t">13:10</div><div class="c"><div class="name">關西機場 KIX 第一航廈</div><div class="det">入境、領行李、<b>HARUKA 要先換好票</b>，步行至 2 樓 JR 關西機場站</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%96%A2%E8%A5%BF%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF%20%E7%AC%AC1%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB" target="_blank" rel="noopener">地圖</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">JR HARUKA 特急 約50分 → JR大阪站（梅北地下月台）</div><div class="m">站內步行約10分 → Metro 梅田站 → 御堂筋線 2 站 → 淀屋橋</div><div class="m">京阪本線 1 站 → 北濱 → 步行 5 分</div></div></div>
-      <div class="step"><div class="t">15:30</div><div class="c"><div class="name">大阪北濱布萊頓城市飯店 <span class="pin">★ CHECK-IN</span></div><div class="det">入住 15:00 起 · 早餐要加購 · 連住 4 晚</div></div></div>
+      <div class="step"><div class="t">15:30</div><div class="c"><div class="name">大阪北濱布萊頓城市飯店 <span class="pin">★ CHECK-IN</span></div><div class="det">入住 15:00 起 · 早餐要加購 · 連住 4 晚</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E3%83%9B%E3%83%86%E3%83%AB%E3%83%96%E3%83%A9%E3%82%A4%E3%83%88%E3%83%B3%E3%82%B7%E3%83%86%E3%82%A3%E5%A4%A7%E9%98%AA%E5%8C%97%E6%B5%9C" target="_blank" rel="noopener">地圖</a><a href="https://kitahama.brightonhotels.co.jp/" target="_blank" rel="noopener">官網</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">堺筋線 北濱 → 長堀橋 2站 4分</div></div></div>
-      <div class="step hi"><div class="t">16:30</div><div class="c"><div class="name">美國村（アメ村）<span class="pin">買鞋先來這</span></div><div class="det">三角公園周邊 · atmos 心齋橋、BILLY'S ENT、Pigsty 古著 · 多數店 <b>20:00</b> 打烊，所以先逛</div></div></div>
+      <div class="step hi"><div class="t">16:30</div><div class="c"><div class="name">美國村（アメ村）<span class="pin">買鞋先來這</span></div><div class="det">三角公園周邊 · atmos 心齋橋、BILLY'S ENT、Pigsty 古著 · 多數店 <b>20:00</b> 打烊，所以先逛</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E3%82%A2%E3%83%A1%E3%83%AA%E3%82%AB%E6%9D%91%20%E4%B8%89%E8%A7%92%E5%85%AC%E5%9C%92%20%E5%A4%A7%E9%98%AA" target="_blank" rel="noopener">地圖</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">步行 約5分</div></div></div>
-      <div class="step hi"><div class="t">17:40</div><div class="c"><div class="name">心齋橋筋商店街</div><div class="det">ABC-MART GRAND STAGE、大國藥妝、UNIQLO／GU、大丸心齋橋本館退稅 · 多開到 <b>21:00</b></div></div></div>
+      <div class="step hi"><div class="t">17:40</div><div class="c"><div class="name">心齋橋筋商店街</div><div class="det">ABC-MART GRAND STAGE、大國藥妝、UNIQLO／GU、大丸心齋橋本館退稅 · 多開到 <b>21:00</b></div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%BF%83%E6%96%8E%E6%A9%8B%E7%AD%8B%E5%95%86%E5%BA%97%E8%A1%97" target="_blank" rel="noopener">地圖</a><a href="https://www.shinsaibashi.or.jp/" target="_blank" rel="noopener">官網</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">步行 約10分</div></div></div>
-      <div class="step hi"><div class="t">18:50</div><div class="c"><div class="name">道頓堀</div><div class="det">固力果看板、章魚燒 · 建議停留 <b>1.5 小時</b></div></div></div>
+      <div class="step hi"><div class="t">18:50</div><div class="c"><div class="name">道頓堀</div><div class="det">固力果看板、章魚燒 · 建議停留 <b>1.5 小時</b></div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%81%93%E9%A0%93%E5%A0%80" target="_blank" rel="noopener">地圖</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">步行 約8分（往黑門市場方向）</div></div></div>
-      <div class="step"><div class="t">20:30</div><div class="c"><div class="name">新宿燒肉 牛舌之檸檬 大阪本店</div><div class="det">同事推薦的牛舌定食 · 約 <b>¥2,500</b> · 有中文菜單 · 位於日本橋／黑門市場旁</div></div></div>
+      <div class="step"><div class="t">20:30</div><div class="c"><div class="name">新宿燒肉 牛舌之檸檬 大阪本店</div><div class="det">同事推薦的牛舌定食 · 約 <b>¥2,500</b> · 有中文菜單 · 位於日本橋／黑門市場旁</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%96%B0%E5%AE%BF%E7%84%BC%E8%82%89%20%E7%89%9B%E3%82%BF%E3%83%B3%E3%81%AE%E3%83%AC%E3%83%A2%E3%83%B3%20%E5%A4%A7%E9%98%AA%E6%9C%AC%E5%BA%97" target="_blank" rel="noopener">地圖</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">堺筋線 日本橋 → 北濱 直達 4 站 約8分</div></div></div>
       <div class="step"><div class="t">22:10</div><div class="c"><div class="name">回飯店</div></div></div>
     </div>
@@ -272,9 +278,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <div class="rail">
       <div class="step"><div class="t">07:30</div><div class="c"><div class="name">飯店早餐</div><div class="det">6:30–10:00（最後入場 9:45），或吃梅田車站的麥當勞</div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">步行5分 → 北濱 → 淀屋橋 → 御堂筋線 → 梅田 → JR大阪站（合計約16分）</div></div></div>
-      <div class="step"><div class="t">08:20</div><div class="c"><div class="name">JR 大阪站</div><div class="det">大阪環狀線直達櫻島行，或於 <b>西九條站</b>轉 JR 櫻島線</div></div></div>
+      <div class="step"><div class="t">08:20</div><div class="c"><div class="name">JR 大阪站</div><div class="det">大阪環狀線直達櫻島行，或於 <b>西九條站</b>轉 JR 櫻島線</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=JR%E5%A4%A7%E9%98%AA%E9%A7%85" target="_blank" rel="noopener">地圖</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">JR 約12分 → 環球城站</div></div></div>
-      <div class="step"><div class="t">08:40</div><div class="c"><div class="name">日本環球影城 USJ</div><div class="det">建議買<b>快速通關券</b>（約開園前兩個月開賣）· <b>ALL DAY LONG</b></div></div></div>
+      <div class="step"><div class="t">08:40</div><div class="c"><div class="name">日本環球影城 USJ</div><div class="det">建議買<b>快速通關券</b>（約開園前兩個月開賣）· <b>ALL DAY LONG</b></div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E3%83%A6%E3%83%8B%E3%83%90%E3%83%BC%E3%82%B5%E3%83%AB%E3%83%BB%E3%82%B9%E3%82%BF%E3%82%B8%E3%82%AA%E3%83%BB%E3%82%B8%E3%83%A3%E3%83%91%E3%83%B3" target="_blank" rel="noopener">地圖</a><a href="https://www.usj.co.jp/web/ja/jp" target="_blank" rel="noopener">官網</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">原路回程 約28分</div></div></div>
       <div class="step"><div class="t">20:00</div><div class="c"><div class="name">晚餐</div><div class="det">環球城市漫步 Shake Shack，或附近超市買打折食物</div></div></div>
     </div>
@@ -283,23 +289,23 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <article class="day" id="d3">
     <header><span class="d">第三天</span><h3>京都 清水寺 → 祇園 → 新世界</h3><span class="tot">北濱站內轉乘，不回飯店</span></header>
     <div class="rail">
-      <div class="step"><div class="t">08:20</div><div class="c"><div class="name">北濱站（京阪本線）</div><div class="det">北濱是<b>特急停靠站</b>，直達不用轉車</div></div></div>
+      <div class="step"><div class="t">08:20</div><div class="c"><div class="name">北濱站（京阪本線）</div><div class="det">北濱是<b>特急停靠站</b>，直達不用轉車</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E4%BA%AC%E9%98%AA%20%E5%8C%97%E6%B5%9C%E9%A7%85" target="_blank" rel="noopener">地圖</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">京阪本線特急 約50分 → 七條站</div><div class="m">出站直上計程車 約10分</div></div></div>
-      <div class="step"><div class="t">09:40</div><div class="c"><div class="name">清水寺</div><div class="det">仁王門／三重塔／本堂清水舞台／奧之院／音羽瀑布 · 建議停留 <b>1.5 小時</b></div></div></div>
+      <div class="step"><div class="t">09:40</div><div class="c"><div class="name">清水寺</div><div class="det">仁王門／三重塔／本堂清水舞台／奧之院／音羽瀑布 · 建議停留 <b>1.5 小時</b></div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%B8%85%E6%B0%B4%E5%AF%BA" target="_blank" rel="noopener">地圖</a><a href="https://www.kiyomizudera.or.jp/" target="_blank" rel="noopener">官網</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">步行下坡</div></div></div>
-      <div class="step"><div class="t">11:10</div><div class="c"><div class="name">三年坂・二年坂</div><div class="det">法觀寺五重塔 · 順路在這一帶吃午餐</div></div></div>
+      <div class="step"><div class="t">11:10</div><div class="c"><div class="name">三年坂・二年坂</div><div class="det">法觀寺五重塔 · 順路在這一帶吃午餐</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E7%94%A3%E5%AF%A7%E5%9D%82%20%E4%BA%8C%E5%B9%B4%E5%9D%82%20%E4%BA%AC%E9%83%BD" target="_blank" rel="noopener">地圖</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">步行（寧寧之道）約15分</div></div></div>
-      <div class="step"><div class="t">13:15</div><div class="c"><div class="name">八坂神社・圓山公園</div><div class="det">建議停留 <b>45 分鐘</b></div></div></div>
+      <div class="step"><div class="t">13:15</div><div class="c"><div class="name">八坂神社・圓山公園</div><div class="det">建議停留 <b>45 分鐘</b></div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%85%AB%E5%9D%82%E7%A5%9E%E7%A4%BE%20%E4%BA%AC%E9%83%BD" target="_blank" rel="noopener">地圖</a><a href="https://www.yasaka-jinja.or.jp/" target="_blank" rel="noopener">官網</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">步行 約10分</div></div></div>
-      <div class="step"><div class="t">14:15</div><div class="c"><div class="name">祇園・花見小路</div><div class="det">建議停留 <b>1 小時</b></div></div></div>
+      <div class="step"><div class="t">14:15</div><div class="c"><div class="name">祇園・花見小路</div><div class="det">建議停留 <b>1 小時</b></div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E8%8A%B1%E8%A6%8B%E5%B0%8F%E8%B7%AF%E9%80%9A%20%E7%A5%87%E5%9C%92" target="_blank" rel="noopener">地圖</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">過四条大橋 步行約8分</div></div></div>
-      <div class="step hi"><div class="t">15:30</div><div class="c"><div class="name">中村藤吉 京都高島屋 S.C. 店 <span class="pin">擺最後一站</span></div><div class="det">抹茶巴菲！吃完直接回走 4 分到祇園四條站，不要再往東逛回去</div></div></div>
+      <div class="step hi"><div class="t">15:30</div><div class="c"><div class="name">中村藤吉 京都高島屋 S.C. 店 <span class="pin">擺最後一站</span></div><div class="det">抹茶巴菲！吃完直接回走 4 分到祇園四條站，不要再往東逛回去</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E4%B8%AD%E6%9D%91%E8%97%A4%E5%90%89%20%E4%BA%AC%E9%83%BD%E9%AB%98%E5%B3%B6%E5%B1%8BS.C.%E5%BA%97" target="_blank" rel="noopener">地圖</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">步行4分 → 祇園四條站 → 京阪本線特急 約50分 直達北濱</div></div></div>
-      <div class="step hi"><div class="t">17:25</div><div class="c"><div class="name">北濱站 <span class="pin">站內轉乘，不出站</span></div><div class="det">京阪北濱站與堺筋線北濱站同一個站體 · 想放東西的話出站走 5 分到飯店，來回約 15 分</div></div></div>
+      <div class="step hi"><div class="t">17:25</div><div class="c"><div class="name">北濱站 <span class="pin">站內轉乘，不出站</span></div><div class="det">京阪北濱站與堺筋線北濱站同一個站體 · 想放東西的話出站走 5 分到飯店，來回約 15 分</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%8C%97%E6%B5%9C%E9%A7%85" target="_blank" rel="noopener">地圖</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">堺筋線 北濱 → 惠美須町 直達 約12分</div></div></div>
-      <div class="step hi"><div class="t">17:50</div><div class="c"><div class="name">通天閣 展望台</div><div class="det">大人 <b>¥1,500</b> · 9:00–21:45（最後入場 21:15）· <b>採時間預約制，傍晚常售完，先上官網預約</b> · 展望台有 Billiken 摸腳底許願，另有 TOWER SLIDER 滑梯（另收費）</div></div></div>
+      <div class="step hi"><div class="t">17:50</div><div class="c"><div class="name">通天閣 展望台</div><div class="det">大人 <b>¥1,500</b> · 9:00–21:45（最後入場 21:15）· <b>採時間預約制，傍晚常售完，先上官網預約</b> · 展望台有 Billiken 摸腳底許願，另有 TOWER SLIDER 滑梯（另收費）</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%80%9A%E5%A4%A9%E9%96%A3" target="_blank" rel="noopener">地圖</a><a href="https://www.tsutenkaku.co.jp/" target="_blank" rel="noopener">官網</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">步行 約5分</div></div></div>
-      <div class="step hi"><div class="t">19:00</div><div class="c"><div class="name">ジャンジャン横丁 串炸晚餐</div><div class="det">熱鬧的是這條（不是新世界市場）· 八重勝（排隊名店）、元祖串かつ だるま 新世界總本店，1 串約 <b>¥130–250</b> · <b>醬汁不能二沾</b></div></div></div>
+      <div class="step hi"><div class="t">19:00</div><div class="c"><div class="name">ジャンジャン横丁 串炸晚餐</div><div class="det">熱鬧的是這條（不是新世界市場）· 八重勝（排隊名店）、元祖串かつ だるま 新世界總本店，1 串約 <b>¥130–250</b> · <b>醬汁不能二沾</b></div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E3%82%B8%E3%83%A3%E3%83%B3%E3%82%B8%E3%83%A3%E3%83%B3%E6%A8%AA%E4%B8%81%20%E6%96%B0%E4%B8%96%E7%95%8C" target="_blank" rel="noopener">地圖</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">堺筋線 惠美須町 → 北濱 直達 約12分</div></div></div>
       <div class="step"><div class="t">21:00</div><div class="c"><div class="name">回飯店</div><div class="det">明天 <b>07:25</b> 要出門去神戶，今晚請務必早睡</div></div></div>
     </div>
@@ -310,17 +316,17 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <div class="rail">
       <div class="step hi"><div class="t">07:25</div><div class="c"><div class="name">出飯店 <span class="pin">別睡過頭</span></div><div class="det">早餐改吃梅田或便利商店，飯店 buffet 會來不及</div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">步行＋御堂筋線 約16分 → JR大阪站</div></div></div>
-      <div class="step"><div class="t">07:41</div><div class="c"><div class="name">JR 大阪站</div><div class="det">搭 <b>JR 神戶線「快速」</b>（新快速不停舞子！）· <b>¥840</b></div></div></div>
+      <div class="step"><div class="t">07:41</div><div class="c"><div class="name">JR 大阪站</div><div class="det">搭 <b>JR 神戶線「快速」</b>（新快速不停舞子！）· <b>¥840</b></div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=JR%E5%A4%A7%E9%98%AA%E9%A7%85" target="_blank" rel="noopener">地圖</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">JR 快速 約49分 → JR舞子站，出站步行5分</div></div></div>
-      <div class="step"><div class="t">09:00</div><div class="c"><div class="name">明石海峽大橋 塔頂體驗</div><div class="det">集合地點：橋的科學館 2F Akashi Kaikyo Bridge Exhibition Center · 9:10 開始 · <b>需線上預約</b>，約 ¥6,600</div></div></div>
+      <div class="step"><div class="t">09:00</div><div class="c"><div class="name">明石海峽大橋 塔頂體驗</div><div class="det">集合地點：橋的科學館 2F Akashi Kaikyo Bridge Exhibition Center · 9:10 開始 · <b>需線上預約</b>，約 ¥6,600</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%A9%8B%E3%81%AE%E7%A7%91%E5%AD%A6%E9%A4%A8%20%E8%88%9E%E5%AD%90" target="_blank" rel="noopener">地圖</a><a href="https://www.jb-honshi.co.jp/bridgeworld/" target="_blank" rel="noopener">官網</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">JR 約25分 → JR三ノ宮站，步行約6分</div></div></div>
-      <div class="step"><div class="t">13:00</div><div class="c"><div class="name">KOBE STEAK Tsubasa 神戶牛</div><div class="det">三宮站西南約 400 公尺 · <b>記得先訂位</b>（另一個常見選擇是 Mouriya，是不同的店）</div></div></div>
+      <div class="step"><div class="t">13:00</div><div class="c"><div class="name">KOBE STEAK Tsubasa 神戶牛</div><div class="det">三宮站西南約 400 公尺 · <b>記得先訂位</b>（另一個常見選擇是 Mouriya，是不同的店）</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=KOBE%20STEAK%20Tsubasa%20%E7%A5%9E%E6%88%B8" target="_blank" rel="noopener">地圖</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">步行</div></div></div>
-      <div class="step"><div class="t">14:30</div><div class="c"><div class="name">三宮中心街・生田神社</div><div class="det">可選，時間不夠就直接回大阪</div></div></div>
+      <div class="step"><div class="t">14:30</div><div class="c"><div class="name">三宮中心街・生田神社</div><div class="det">可選，時間不夠就直接回大阪</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E7%94%9F%E7%94%B0%E7%A5%9E%E7%A4%BE%20%E7%A5%9E%E6%88%B8" target="_blank" rel="noopener">地圖</a><a href="https://www.ikutajinja.or.jp/" target="_blank" rel="noopener">官網</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">JR 神戶線新快速 約21–30分 直達 → JR大阪站</div></div></div>
-      <div class="step"><div class="t">16:00</div><div class="c"><div class="name">梅田商圈逛街</div><div class="det">LUCUA／HEP FIVE 摩天輪／Grand Front／阪急百貨</div></div></div>
+      <div class="step"><div class="t">16:00</div><div class="c"><div class="name">梅田商圈逛街</div><div class="det">LUCUA／HEP FIVE 摩天輪／Grand Front／阪急百貨</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%A4%A7%E9%98%AA%E9%A7%85%20%E6%A2%85%E7%94%B0" target="_blank" rel="noopener">地圖</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">步行 約10分</div></div></div>
-      <div class="step"><div class="t">17:40</div><div class="c"><div class="name">梅田藍天大廈 空中庭園展望台</div><div class="det">11 月日落約 <b>16:50</b>，想拍黃昏就提早到；在地夜景地標</div></div></div>
+      <div class="step"><div class="t">17:40</div><div class="c"><div class="name">梅田藍天大廈 空中庭園展望台</div><div class="det">11 月日落約 <b>16:50</b>，想拍黃昏就提早到；在地夜景地標</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%A2%85%E7%94%B0%E3%82%B9%E3%82%AB%E3%82%A4%E3%83%93%E3%83%AB%20%E7%A9%BA%E4%B8%AD%E5%BA%AD%E5%9C%92%E5%B1%95%E6%9C%9B%E5%8F%B0" target="_blank" rel="noopener">地圖</a><a href="https://www.skybldg.co.jp/" target="_blank" rel="noopener">官網</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">步行回梅田</div></div></div>
       <div class="step"><div class="t">19:00</div><div class="c"><div class="name">梅田晚餐 → 回北濱</div><div class="det">御堂筋線梅田→淀屋橋 2 站，回飯店約 <b>16 分</b></div></div></div>
     </div>
@@ -331,19 +337,19 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <div class="rail">
       <div class="step"><div class="t">11:00</div><div class="c"><div class="name">北濱 CHECK-OUT</div><div class="det">睡飽再退房，吃早午餐</div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">堺筋線 北濱 → 長堀橋 2站4分 → 步行8分</div></div></div>
-      <div class="step"><div class="t">11:30</div><div class="c"><div class="name">HOTEL THE FLAG 心齋橋 <span class="pin">★ 先寄放行李</span></div><div class="det">15:00 才能入住，行李先寄放 · 早餐要加購</div></div></div>
+      <div class="step"><div class="t">11:30</div><div class="c"><div class="name">HOTEL THE FLAG 心齋橋 <span class="pin">★ 先寄放行李</span></div><div class="det">15:00 才能入住，行李先寄放 · 早餐要加購</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=HOTEL%20THE%20FLAG%20Shinsaibashi" target="_blank" rel="noopener">地圖</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">步行</div></div></div>
-      <div class="step"><div class="t">12:00</div><div class="c"><div class="name">心齋橋／道頓堀 午餐</div><div class="det">拉麵或大阪燒</div></div></div>
+      <div class="step"><div class="t">12:00</div><div class="c"><div class="name">心齋橋／道頓堀 午餐</div><div class="det">拉麵或大阪燒</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%81%93%E9%A0%93%E5%A0%80" target="_blank" rel="noopener">地圖</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">步行</div></div></div>
-      <div class="step"><div class="t">13:00</div><div class="c"><div class="name">心齋橋筋 逛街採買</div><div class="det">D1 沒買完的補齊 · 建議停留 <b>1.5–2 小時</b></div></div></div>
+      <div class="step"><div class="t">13:00</div><div class="c"><div class="name">心齋橋筋 逛街採買</div><div class="det">D1 沒買完的補齊 · 建議停留 <b>1.5–2 小時</b></div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%BF%83%E6%96%8E%E6%A9%8B%E7%AD%8B%E5%95%86%E5%BA%97%E8%A1%97" target="_blank" rel="noopener">地圖</a><a href="https://www.shinsaibashi.or.jp/" target="_blank" rel="noopener">官網</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">從道頓堀步行 約8分（往西南）</div></div></div>
-      <div class="step hi"><div class="t">15:00</div><div class="c"><div class="name">難波八阪神社 <span class="pin">新增</span></div><div class="det">巨型獅子殿，祈求勝運 · <b>免費參拜</b> · 約 6:30–17:00 · 建議停留 <b>30–40 分</b> · 白天拍才好看</div></div></div>
+      <div class="step hi"><div class="t">15:00</div><div class="c"><div class="name">難波八阪神社 <span class="pin">新增</span></div><div class="det">巨型獅子殿，祈求勝運 · <b>免費參拜</b> · 開放時間依神社公告 · 建議停留 <b>30–40 分</b> · 白天拍才好看</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%9B%A3%E6%B3%A2%E5%85%AB%E9%98%AA%E7%A5%9E%E7%A4%BE" target="_blank" rel="noopener">地圖</a><a href="https://nambayasaka.jp/" target="_blank" rel="noopener">官網</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">步行至難波站 → 御堂筋線 → 天王寺，合計約19分</div></div></div>
-      <div class="step"><div class="t">16:10</div><div class="c"><div class="name">阿倍野 HARUKAS 300 展望台</div><div class="det">天王寺站 9／10 號出口直通 · 日落約 <b>16:50</b>，黃昏接夜景一次看完 · 部分關西周遊券可折抵</div></div></div>
+      <div class="step"><div class="t">16:10</div><div class="c"><div class="name">阿倍野 HARUKAS 300 展望台</div><div class="det">天王寺站 9／10 號出口直通 · 日落約 <b>16:50</b>，黃昏接夜景一次看完 · 部分關西周遊券可折抵</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E3%81%82%E3%81%B9%E3%81%AE%E3%83%8F%E3%83%AB%E3%82%AB%E3%82%B9300%20%E5%B1%95%E6%9C%9B%E5%8F%B0" target="_blank" rel="noopener">地圖</a><a href="https://www.abenoharukas-300.jp/" target="_blank" rel="noopener">官網</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">御堂筋線 天王寺 → 心齋橋 直達 約7分</div></div></div>
-      <div class="step"><div class="t">18:10</div><div class="c"><div class="name">道頓堀 晚餐 ＋ 藥妝伴手禮採買</div><div class="det">順路經過黑門市場 · 買完直接散步回飯店放戰利品</div></div></div>
+      <div class="step"><div class="t">18:10</div><div class="c"><div class="name">道頓堀 晚餐 ＋ 藥妝伴手禮採買</div><div class="det">順路經過黑門市場 · 買完直接散步回飯店放戰利品</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%81%93%E9%A0%93%E5%A0%80" target="_blank" rel="noopener">地圖</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">步行回心齋橋</div></div></div>
-      <div class="step"><div class="t">20:30</div><div class="c"><div class="name">HOTEL THE FLAG 心齋橋</div><div class="det">全天 5 個點，只有最後回飯店那 7 分鐘是回程</div></div></div>
+      <div class="step"><div class="t">20:30</div><div class="c"><div class="name">HOTEL THE FLAG 心齋橋</div><div class="det">全天 5 個點，只有最後回飯店那 7 分鐘是回程</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=HOTEL%20THE%20FLAG%20Shinsaibashi" target="_blank" rel="noopener">地圖</a></div></div></div>
     </div>
   </article>
 
@@ -352,9 +358,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <div class="rail">
       <div class="step"><div class="t">09:00</div><div class="c"><div class="name">飯店早餐 → CHECK-OUT</div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">步行 → 御堂筋線 心齋橋 → 難波 1 站</div></div></div>
-      <div class="step"><div class="t">10:30</div><div class="c"><div class="name">難波站 南海電鐵</div><div class="det">Rapi:t <b>需劃位</b>才有行李空間</div></div></div>
+      <div class="step"><div class="t">10:30</div><div class="c"><div class="name">難波站 南海電鐵</div><div class="det">Rapi:t <b>需劃位</b>才有行李空間</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%8D%97%E6%B5%B7%20%E9%9B%A3%E6%B3%A2%E9%A7%85" target="_blank" rel="noopener">地圖</a><a href="https://www.nankai.co.jp/traffic/express/rapit.html" target="_blank" rel="noopener">官網</a></div></div></div>
       <div class="move"><div class="t"></div><div class="c"><div class="m">南海電鐵 Rapi:t 約38分</div></div></div>
-      <div class="step"><div class="t">11:30</div><div class="c"><div class="name">關西機場 報到</div><div class="det">逛免稅＋退稅，行程結束</div></div></div>
+      <div class="step"><div class="t">11:30</div><div class="c"><div class="name">關西機場 報到</div><div class="det">逛免稅＋退稅，行程結束</div><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%96%A2%E8%A5%BF%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF%20%E7%AC%AC1%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB" target="_blank" rel="noopener">地圖</a></div></div></div>
     </div>
   </article>
 </section>
@@ -393,7 +399,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
           <s>心齋橋午餐逛街</s><u>走8分</u><s>難波八阪神社</s><u>19分</u><s>HARUKAS 日落</s><u>御堂筋7分</u><s>道頓堀晚餐採買</s><u>走回</u><s>FLAG</s>
         </div></div>
       </div>
-      <p>神社約 <span class="num">6:30–17:00</span> 開放、免費參拜，巨型獅子殿要白天拍才好看，所以排在 <span class="num">15:00</span>。這樣 D5 只有 5 個點，不會太滿。</p>
+      <p>神社免費參拜，開放時間請以官網／現場公告為準；巨型獅子殿要白天拍才好看，所以排在 <span class="num">15:00</span>。這樣 D5 只有 5 個點，不會太滿。</p>
     </div>
 
     <div class="find sev1">
