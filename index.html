@@ -860,6 +860,15 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .backup textarea{font-family:var(--font-num);font-size:11px;color:var(--fg);background:var(--bg);
   border:1px solid var(--rule);border-radius:7px;padding:9px;width:100%;min-height:80px;resize:vertical}
 .backup .erow button.warn{background:var(--warn)}
+.backup p b{color:#d8dee4}
+.ghbtn{display:inline-block;background:var(--good);color:var(--ink);border-radius:8px;
+  padding:9px 16px;font-size:13px;font-weight:700;text-decoration:none;align-self:flex-start}
+#update-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--panel-2);
+  border:1px solid var(--warn);border-radius:10px;padding:11px 14px;margin-bottom:12px;font-size:13px}
+#update-bar span{color:#d8dee4;flex:1 1 200px;min-width:0}
+#update-bar button{font-family:var(--font-ui);cursor:pointer;background:var(--warn);color:var(--ink);
+  border:0;border-radius:7px;padding:6px 13px;font-size:12.5px;font-weight:700}
+#update-bar button.ghost{background:transparent;color:var(--muted);border:1px solid var(--rule)}
 #flash{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));
   z-index:40;background:var(--panel-2);border:1px solid var(--cyan);color:var(--fg);
   border-radius:999px;padding:9px 18px;font-size:13px;font-weight:700;box-shadow:0 6px 24px rgba(0,0,0,.45);
@@ -987,6 +996,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <a href="#d6">D6 離境</a>
   </nav>
   <div class="toolbar"><button type="button" data-editbtn aria-pressed="false">編輯</button><span class="hintline">新增、修改、調整順序；改動只存在這台裝置</span></div>
+  <div id="update-bar" hidden></div>
   <div id="days-host">
 
   <article class="day" id="d1">
@@ -1152,6 +1162,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
         <button type="button" class="ghost" id="io-import">匯入備份</button>
         <button type="button" class="ghost warn" id="io-reset">回復原始行程</button>
       </div>
+      <p>要改<b>大家都看得到</b>的那一份，用下面這顆在 GitHub 上編輯 data.json。只有這個 repo 的協作者打得開，改完所有人重新整理就看得到。</p>
+      <a class="ghbtn" id="gh-edit" href="#" target="_blank" rel="noopener" hidden>在 GitHub 編輯共同行程</a>
       <label for="io-box" style="font-size:12px;color:var(--muted)">備份內容</label>
       <textarea id="io-box" spellcheck="false" placeholder="按「匯出備份」會把內容放在這裡；要匯入就把備份貼進來再按「匯入備份」"></textarea>
     </div>
@@ -1177,6 +1189,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
    replaces the static rails and todo grid with editable, locally-saved copies. */
 (function () {
   var KEY = 'kansai.trip.v1';
+  var BKEY = 'kansai.trip.base';   // which published version the local copy branched from
   var dataEl = document.getElementById('trip-data');
   var railsHost = document.getElementById('days-host');
   var todoHost = document.getElementById('todo-host');
@@ -1186,6 +1199,14 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   try { BASE = JSON.parse(dataEl.textContent); } catch (e) { return; }
 
   function clone(o) { return JSON.parse(JSON.stringify(o)); }
+
+  function stamp(o) {
+    var t = JSON.stringify(o), h = 0;
+    for (var i = 0; i < t.length; i++) { h = (h * 31 + t.charCodeAt(i)) | 0; }
+    return String(h);
+  }
+  function getItem(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function setItem(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
   function load() {
     try {
@@ -1199,8 +1220,10 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   }
 
   function save() {
-    try { localStorage.setItem(KEY, JSON.stringify(state)); }
-    catch (e) { flash('存不進瀏覽器（可能是無痕模式），這次的修改重整後會不見'); }
+    try {
+      localStorage.setItem(KEY, JSON.stringify(state));
+      localStorage.setItem(BKEY, stamp(BASE));
+    } catch (e) { flash('存不進瀏覽器（可能是無痕模式），這次的修改重整後會不見'); }
   }
 
   var flashT;
@@ -1633,9 +1656,53 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   /* The published site carries data.json next to index.html. Only people with
      write access to the repository can change it, so for everyone else the
      shared itinerary is read-only; their own edits stay in their browser. */
+  /* If the published itinerary moved on while this device had its own edits,
+     say so instead of silently sitting on an old copy. */
+  function updateBanner() {
+    var host = document.getElementById('update-bar');
+    if (!host) return;
+    var hasLocal = !!getItem(KEY);
+    var branchedFrom = getItem(BKEY);
+    if (!hasLocal || !branchedFrom || branchedFrom === stamp(BASE)) { host.hidden = true; return; }
+    host.hidden = false;
+    host.innerHTML = '<span>網站上的行程有更新，你目前看的是自己改過的版本。</span>' +
+      '<button type="button" data-act="take">改用網站版</button>' +
+      '<button type="button" class="ghost" data-act="keep">保留我的</button>';
+  }
+
+  var bar = document.getElementById('update-bar');
+  if (bar) bar.addEventListener('click', function (ev) {
+    var b = ev.target.closest('button[data-act]');
+    if (!b) return;
+    if (b.getAttribute('data-act') === 'take') {
+      state = clone(BASE);
+      try { localStorage.removeItem(KEY); } catch (e) {}
+      setItem(BKEY, stamp(BASE));
+      render(); updateBanner();
+      flash('已改用網站上的最新行程');
+    } else {
+      setItem(BKEY, stamp(BASE));
+      updateBanner();
+      flash('保留你的版本，之後更新再提醒你');
+    }
+  });
+
+  /* On GitHub Pages, offer the one place where a shared change can be made. */
+  function wireGithubLink() {
+    var a = document.getElementById('gh-edit');
+    if (!a) return;
+    var m = location.hostname.match(/^([^.]+)\.github\.io$/);
+    var repo = location.pathname.split('/').filter(Boolean)[0];
+    if (!m || !repo) { a.hidden = true; return; }
+    a.href = 'https://github.com/' + m[1] + '/' + repo + '/edit/main/data.json';
+    a.hidden = false;
+  }
+
   function boot() {
     state = load();
     render();
+    updateBanner();
+    wireGithubLink();
     /* Leaflet mis-measures a map inside a hidden tab, so re-fit on tab change */
     var days = document.getElementById('t-days');
     if (days) {
