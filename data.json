@@ -15,7 +15,9 @@
      "det": "入境、領行李、<b>HARUKA 要先換好票</b>，步行至 2 樓 JR 關西機場站",
      "hi": false,
      "q": "%E9%96%A2%E8%A5%BF%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF%20%E7%AC%AC1%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB",
-     "url": ""
+     "url": "",
+     "lat": 34.434332,
+     "lng": 135.244197
     },
     {
      "k": "m",
@@ -33,7 +35,9 @@
      "det": "入住 15:00 起 · 早餐要加購 · 連住 4 晚",
      "hi": false,
      "q": "%E3%83%9B%E3%83%86%E3%83%AB%E3%83%96%E3%83%A9%E3%82%A4%E3%83%88%E3%83%B3%E3%82%B7%E3%83%86%E3%82%A3%E5%A4%A7%E9%98%AA%E5%8C%97%E6%B5%9C",
-     "url": "https://kitahama.brightonhotels.co.jp/"
+     "url": "https://kitahama.brightonhotels.co.jp/",
+     "lat": 34.689069,
+     "lng": 135.507885
     },
     {
      "k": "m",
@@ -49,7 +53,9 @@
      "det": "三角公園周邊 · atmos 心齋橋、BILLY'S ENT、Pigsty 古著 · 多數店 <b>20:00</b> 打烊，所以先逛",
      "hi": true,
      "q": "%E3%82%A2%E3%83%A1%E3%83%AA%E3%82%AB%E6%9D%91%20%E4%B8%89%E8%A7%92%E5%85%AC%E5%9C%92%20%E5%A4%A7%E9%98%AA",
-     "url": ""
+     "url": "",
+     "lat": 34.672098,
+     "lng": 135.497928
     },
     {
      "k": "m",
@@ -65,7 +71,9 @@
      "det": "ABC-MART GRAND STAGE、大國藥妝、UNIQLO／GU、大丸心齋橋本館退稅 · 多開到 <b>21:00</b>",
      "hi": true,
      "q": "%E5%BF%83%E6%96%8E%E6%A9%8B%E7%AD%8B%E5%95%86%E5%BA%97%E8%A1%97",
-     "url": "https://www.shinsaibashi.or.jp/"
+     "url": "https://www.shinsaibashi.or.jp/",
+     "lat": 34.670674,
+     "lng": 135.501326
     },
     {
      "k": "m",
@@ -81,7 +89,9 @@
      "det": "固力果看板、章魚燒 · 建議停留 <b>1.5 小時</b>",
      "hi": true,
      "q": "%E9%81%93%E9%A0%93%E5%A0%80",
-     "url": ""
+     "url": "",
+     "lat": 34.669031,
+     "lng": 135.501572
     },
     {
      "k": "m",
@@ -97,7 +107,9 @@
      "det": "同事推薦的牛舌定食 · 約 <b>¥2,500</b> · 有中文菜單 · 位於日本橋／黑門市場旁",
      "hi": false,
      "q": "%E6%96%B0%E5%AE%BF%E7%84%BC%E8%82%89%20%E7%89%9B%E3%82%BF%E3%83%B3%E3%81%AE%E3%83%AC%E3%83%A2%E3%83%B3%20%E5%A4%A7%E9%98%AA%E6%9C%AC%E5%BA%97",
-     "url": ""
+     "url": "",
+     "lat": 34.666698,
+     "lng": 135.505115
     },
     {
      "k": "m",
@@ -148,7 +160,9 @@
      "det": "大阪環狀線直達櫻島行，或於 <b>西九條站</b>轉 JR 櫻島線",
      "hi": false,
      "q": "JR%E5%A4%A7%E9%98%AA%E9%A7%85",
-     "url": ""
+     "url": "",
+     "lat": 34.70181,
+     "lng": 135.494489
     },
     {
      "k": "m",
@@ -164,7 +178,9 @@
      "det": "建議買<b>快速通關券</b>（約開園前兩個月開賣）· <b>ALL DAY LONG</b>",
      "hi": false,
      "q": "%E3%83%A6%E3%83%8B%E3%83%90%E3%83%BC%E3%82%B5%E3%83%AB%E3%83%BB%E3%82%B9%E3%82%BF%E3%82%B8%E3%82%AA%E3%83%BB%E3%82%B8%E3%83%A3%E3%83%91%E3%83%B3",
-     "url": "https://www.usj.co.jp/web/ja/jp"
+     "url": "https://www.usj.co.jp/web/ja/jp",
+     "lat": 34.665639,
+     "lng": 135.432453
     },
     {
      "k": "m",
@@ -199,7 +215,9 @@
      "det": "北濱是<b>特急停靠站</b>，直達不用轉車",
      "hi": false,
      "q": "%E4%BA%AC%E9%98%AA%20%E5%8C%97%E6%B5%9C%E9%A7%85",
-     "url": ""
+     "url": "",
+     "lat": 34.691171,
+     "lng": 135.506582
     },
     {
      "k": "m",
@@ -216,7 +234,9 @@
      "det": "仁王門／三重塔／本堂清水舞台／奧之院／音羽瀑布 · 建議停留 <b>1.5 小時</b>",
      "hi": false,
      "q": "%E6%B8%85%E6%B0%B4%E5%AF%BA",
-     "url": "https://www.kiyomizudera.or.jp/"
+     "url": "https://www.kiyomizudera.or.jp/",
+     "lat": 34.994303,
+     "lng": 135.784439
     },
     {
      "k": "m",
@@ -232,7 +252,9 @@
      "det": "法觀寺五重塔 · 順路在這一帶吃午餐",
      "hi": false,
      "q": "%E7%94%A3%E5%AF%A7%E5%9D%82%20%E4%BA%8C%E5%B9%B4%E5%9D%82%20%E4%BA%AC%E9%83%BD",
-     "url": ""
+     "url": "",
+     "lat": 34.997529,
+     "lng": 135.781062
     },
     {
      "k": "m",
@@ -248,7 +270,9 @@
      "det": "建議停留 <b>45 分鐘</b>",
      "hi": false,
      "q": "%E5%85%AB%E5%9D%82%E7%A5%9E%E7%A4%BE%20%E4%BA%AC%E9%83%BD",
-     "url": "https://www.yasaka-jinja.or.jp/"
+     "url": "https://www.yasaka-jinja.or.jp/",
+     "lat": 35.003603,
+     "lng": 135.778261
     },
     {
      "k": "m",
@@ -264,7 +288,9 @@
      "det": "建議停留 <b>1 小時</b>",
      "hi": false,
      "q": "%E8%8A%B1%E8%A6%8B%E5%B0%8F%E8%B7%AF%E9%80%9A%20%E7%A5%87%E5%9C%92",
-     "url": ""
+     "url": "",
+     "lat": 35.004475,
+     "lng": 135.775143
     },
     {
      "k": "m",
@@ -280,7 +306,9 @@
      "det": "抹茶巴菲！吃完直接回走 4 分到祇園四條站，不要再往東逛回去",
      "hi": true,
      "q": "%E4%B8%AD%E6%9D%91%E8%97%A4%E5%90%89%20%E4%BA%AC%E9%83%BD%E9%AB%98%E5%B3%B6%E5%B1%8BS.C.%E5%BA%97",
-     "url": ""
+     "url": "",
+     "lat": 35.003074,
+     "lng": 135.768425
     },
     {
      "k": "m",
@@ -296,7 +324,9 @@
      "det": "京阪北濱站與堺筋線北濱站同一個站體 · 想放東西的話出站走 5 分到飯店，來回約 15 分",
      "hi": true,
      "q": "%E5%8C%97%E6%B5%9C%E9%A7%85",
-     "url": ""
+     "url": "",
+     "lat": 34.691171,
+     "lng": 135.506582
     },
     {
      "k": "m",
@@ -312,7 +342,9 @@
      "det": "大人 <b>¥1,500</b> · 9:00–21:45（最後入場 21:15）· <b>採時間預約制，傍晚常售完，先上官網預約</b> · 展望台有 Billiken 摸腳底許願，另有 TOWER SLIDER 滑梯（另收費）",
      "hi": true,
      "q": "%E9%80%9A%E5%A4%A9%E9%96%A3",
-     "url": "https://www.tsutenkaku.co.jp/"
+     "url": "https://www.tsutenkaku.co.jp/",
+     "lat": 34.652539,
+     "lng": 135.50631
     },
     {
      "k": "m",
@@ -328,7 +360,9 @@
      "det": "熱鬧的是這條（不是新世界市場）· 八重勝（排隊名店）、元祖串かつ だるま 新世界總本店，1 串約 <b>¥130–250</b> · <b>醬汁不能二沾</b>",
      "hi": true,
      "q": "%E3%82%B8%E3%83%A3%E3%83%B3%E3%82%B8%E3%83%A3%E3%83%B3%E6%A8%AA%E4%B8%81%20%E6%96%B0%E4%B8%96%E7%95%8C",
-     "url": ""
+     "url": "",
+     "lat": 34.64968,
+     "lng": 135.505997
     },
     {
      "k": "m",
@@ -379,7 +413,9 @@
      "det": "搭 <b>JR 神戶線「快速」</b>（新快速不停舞子！）· <b>¥840</b>",
      "hi": false,
      "q": "JR%E5%A4%A7%E9%98%AA%E9%A7%85",
-     "url": ""
+     "url": "",
+     "lat": 34.70181,
+     "lng": 135.494489
     },
     {
      "k": "m",
@@ -395,7 +431,9 @@
      "det": "集合地點：橋的科學館 2F Akashi Kaikyo Bridge Exhibition Center · 9:10 開始 · <b>需線上預約</b>，約 ¥6,600",
      "hi": false,
      "q": "%E6%A9%8B%E3%81%AE%E7%A7%91%E5%AD%A6%E9%A4%A8%20%E8%88%9E%E5%AD%90",
-     "url": "https://www.jb-honshi.co.jp/bridgeworld/"
+     "url": "https://www.jb-honshi.co.jp/bridgeworld/",
+     "lat": 34.631619,
+     "lng": 135.032677
     },
     {
      "k": "m",
@@ -411,7 +449,9 @@
      "det": "三宮站西南約 400 公尺 · <b>記得先訂位</b>（另一個常見選擇是 Mouriya，是不同的店）",
      "hi": false,
      "q": "KOBE%20STEAK%20Tsubasa%20%E7%A5%9E%E6%88%B8",
-     "url": ""
+     "url": "",
+     "lat": 34.693431,
+     "lng": 135.191829
     },
     {
      "k": "m",
@@ -427,7 +467,9 @@
      "det": "可選，時間不夠就直接回大阪",
      "hi": false,
      "q": "%E7%94%9F%E7%94%B0%E7%A5%9E%E7%A4%BE%20%E7%A5%9E%E6%88%B8",
-     "url": "https://www.ikutajinja.or.jp/"
+     "url": "https://www.ikutajinja.or.jp/",
+     "lat": 34.69461,
+     "lng": 135.190617
     },
     {
      "k": "m",
@@ -443,7 +485,9 @@
      "det": "LUCUA／HEP FIVE 摩天輪／Grand Front／阪急百貨",
      "hi": false,
      "q": "%E5%A4%A7%E9%98%AA%E9%A7%85%20%E6%A2%85%E7%94%B0",
-     "url": ""
+     "url": "",
+     "lat": 34.701905,
+     "lng": 135.494426
     },
     {
      "k": "m",
@@ -459,7 +503,9 @@
      "det": "11 月日落約 <b>16:50</b>，想拍黃昏就提早到；在地夜景地標",
      "hi": false,
      "q": "%E6%A2%85%E7%94%B0%E3%82%B9%E3%82%AB%E3%82%A4%E3%83%93%E3%83%AB%20%E7%A9%BA%E4%B8%AD%E5%BA%AD%E5%9C%92%E5%B1%95%E6%9C%9B%E5%8F%B0",
-     "url": "https://www.skybldg.co.jp/"
+     "url": "https://www.skybldg.co.jp/",
+     "lat": 34.705293,
+     "lng": 135.490535
     },
     {
      "k": "m",
@@ -510,7 +556,9 @@
      "det": "15:00 才能入住，行李先寄放 · 早餐要加購",
      "hi": false,
      "q": "HOTEL%20THE%20FLAG%20Shinsaibashi",
-     "url": ""
+     "url": "",
+     "lat": 34.674173,
+     "lng": 135.503118
     },
     {
      "k": "m",
@@ -526,7 +574,9 @@
      "det": "拉麵或大阪燒",
      "hi": false,
      "q": "%E9%81%93%E9%A0%93%E5%A0%80",
-     "url": ""
+     "url": "",
+     "lat": 34.669031,
+     "lng": 135.501572
     },
     {
      "k": "m",
@@ -542,7 +592,9 @@
      "det": "D1 沒買完的補齊 · 建議停留 <b>1.5–2 小時</b>",
      "hi": false,
      "q": "%E5%BF%83%E6%96%8E%E6%A9%8B%E7%AD%8B%E5%95%86%E5%BA%97%E8%A1%97",
-     "url": "https://www.shinsaibashi.or.jp/"
+     "url": "https://www.shinsaibashi.or.jp/",
+     "lat": 34.670674,
+     "lng": 135.501326
     },
     {
      "k": "m",
@@ -558,7 +610,9 @@
      "det": "巨型獅子殿，祈求勝運 · <b>免費參拜</b> · 開放時間依神社公告 · 建議停留 <b>30–40 分</b> · 白天拍才好看",
      "hi": true,
      "q": "%E9%9B%A3%E6%B3%A2%E5%85%AB%E9%98%AA%E7%A5%9E%E7%A4%BE",
-     "url": "https://nambayasaka.jp/"
+     "url": "https://nambayasaka.jp/",
+     "lat": 34.661559,
+     "lng": 135.496704
     },
     {
      "k": "m",
@@ -574,7 +628,9 @@
      "det": "天王寺站 9／10 號出口直通 · 日落約 <b>16:50</b>，黃昏接夜景一次看完 · 部分關西周遊券可折抵",
      "hi": false,
      "q": "%E3%81%82%E3%81%B9%E3%81%AE%E3%83%8F%E3%83%AB%E3%82%AB%E3%82%B9300%20%E5%B1%95%E6%9C%9B%E5%8F%B0",
-     "url": "https://www.abenoharukas-300.jp/"
+     "url": "https://www.abenoharukas-300.jp/",
+     "lat": 34.645769,
+     "lng": 135.514007
     },
     {
      "k": "m",
@@ -590,7 +646,9 @@
      "det": "順路經過黑門市場 · 買完直接散步回飯店放戰利品",
      "hi": false,
      "q": "%E9%81%93%E9%A0%93%E5%A0%80",
-     "url": ""
+     "url": "",
+     "lat": 34.669031,
+     "lng": 135.501572
     },
     {
      "k": "m",
@@ -606,7 +664,9 @@
      "det": "全天 5 個點，只有最後回飯店那 7 分鐘是回程",
      "hi": false,
      "q": "HOTEL%20THE%20FLAG%20Shinsaibashi",
-     "url": ""
+     "url": "",
+     "lat": 34.674173,
+     "lng": 135.503118
     }
    ]
   },
@@ -641,7 +701,9 @@
      "det": "Rapi:t <b>需劃位</b>才有行李空間",
      "hi": false,
      "q": "%E5%8D%97%E6%B5%B7%20%E9%9B%A3%E6%B3%A2%E9%A7%85",
-     "url": "https://www.nankai.co.jp/traffic/express/rapit.html"
+     "url": "https://www.nankai.co.jp/traffic/express/rapit.html",
+     "lat": 34.665057,
+     "lng": 135.500596
     },
     {
      "k": "m",
@@ -657,7 +719,9 @@
      "det": "逛免稅＋退稅，行程結束",
      "hi": false,
      "q": "%E9%96%A2%E8%A5%BF%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF%20%E7%AC%AC1%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB",
-     "url": ""
+     "url": "",
+     "lat": 34.434332,
+     "lng": 135.244197
     }
    ]
   }
